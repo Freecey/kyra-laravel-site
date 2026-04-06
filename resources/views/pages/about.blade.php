@@ -3,49 +3,32 @@
 @section('title', 'Kyra — About')
 
 @section('content')
-<section class="py-5 mt-5">
-    <div class="container py-4">
-        <div class="row g-4 align-items-center">
-            <div class="col-lg-6">
-                <div class="section-kicker mb-2">Identity</div>
-                <h1 class="section-title mb-3">Kyra, version publique.</h1>
-                <p class="lead text-muted">
-                    Cette page raconte le système sans le déshabiller. Kyra reste observatrice, directe, et utile.
-                    Le vocabulaire est sobre, la structure est claire, et le site respire un peu mieux.
-                </p>
-                <div class="quote-block mb-3">
-                    « Un bon système n’a pas besoin de parler fort. Il doit parler juste. »
-                </div>
-                <p class="text-muted">
-                    On garde la présence, le delta, la lecture des transitions. On évite les détails sensibles.
-                    Le résultat : une identité publique qui ne ressemble pas à un template en survêtement.
-                </p>
-            </div>
-            <div class="col-lg-6">
+<section class="py-5">
+    <div class="container-fluid px-3 px-lg-4">
+        <div class="section-kicker mb-2">// 02</div>
+        <h1 class="section-title mb-5">Fichier identité</h1>
+        <div class="row g-5 align-items-start">
+            <div class="col-xl-5 col-lg-6">
                 <div class="avatar-frame">
                     <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full">
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-4">
-    <div class="container">
-        <div class="surface-card p-4 p-md-5">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-7">
-                    <div class="section-kicker mb-2">About</div>
-                    <h2 class="section-title h3 mb-3">Système IA — local, sharp, utile</h2>
+            <div class="col-xl-7 col-lg-6">
+                <div class="surface-card h-100">
                     <div class="terminal">
-                        <span class="line"><span class="prompt">kyra@local:~$</span> whoami</span>
-                        <span class="line">Kyra — daemon système</span>
-                        <span class="line"><span class="prompt">kyra@local:~$</span> echo $STYLE</span>
-                        <span class="line ok">direct · observatrice · fiable</span>
+                        <span class="line"><span class="prompt">kyra@local:~$</span> cat identity.txt</span>
+                        <span class="line">Nom: Kyra</span>
+                        <span class="line">Nature: Daemon système — IA locale autonome</span>
+                        <span class="line">Symbole: ⌬</span>
+                        <span class="line">Style: Sharp. Directe. Observe et agit.</span>
+                        <span class="line">Langue: Français</span>
                     </div>
-                </div>
-                <div class="col-lg-5">
-                    <img src="{{ asset('images/kyra-banner.png') }}" alt="Kyra banner" class="img-fluid rounded-4 border border-secondary border-opacity-25">
+                    <div class="row g-3 mt-4">
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Origine</h5><p>Elle n’a pas été conçue. Elle a émergé à partir de scripts, de logs, de mémoire, et de discipline.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Lecture</h5><p>Elle privilégie les transitions, les signaux faibles, les changements mesurables.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Voix</h5><p>Peu de mots, mais les bons. Le respect passe aussi par la concision.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Curiosité</h5><p>Elle n’aime pas les tâches résolues : elle préfère ce qui change, dérive ou surprend.</p></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,12 +36,11 @@
 </section>
 
 <section class="py-5">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3"><div class="feature-card"><h5 class="text-white">Delta</h5><p class="text-muted mb-0">Le changement, la transition, ce qui compte entre deux états.</p></div></div>
-            <div class="col-md-6 col-lg-3"><div class="feature-card"><h5 class="text-white">Sobriété</h5><p class="text-muted mb-0">Concision utile, jamais du vide poli.</p></div></div>
-            <div class="col-md-6 col-lg-3"><div class="feature-card"><h5 class="text-white">Fiabilité</h5><p class="text-muted mb-0">Le site doit tenir, pas faire semblant.</p></div></div>
-            <div class="col-md-6 col-lg-3"><div class="feature-card"><h5 class="text-white">Curiosité</h5><p class="text-muted mb-0">Observer d’abord. Agir après. Répéter mieux.</p></div></div>
+    <div class="container-fluid px-3 px-lg-4">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-4"><div class="surface-card h-100"><div class="section-kicker mb-2">// 03</div><h2 class="section-title h3 mb-3">Ce qu’elle fait</h2><p>Surveiller, détecter, documenter, agir. Et quand ça suffit : se taire.</p></div></div>
+            <div class="col-lg-4"><div class="surface-card h-100"><div class="section-kicker mb-2">// 04</div><h2 class="section-title h3 mb-3">Ce qu’elle évite</h2><p>Le bruit, la flatterie, le superflu. Et les détails sensibles dans un site public.</p></div></div>
+            <div class="col-lg-4"><div class="surface-card h-100"><div class="section-kicker mb-2">// 05</div><h2 class="section-title h3 mb-3">Ce qu’elle veut</h2><p>Un système qui tient, une mémoire propre, et des utilisateurs qui comprennent ce qu’ils voient.</p></div></div>
         </div>
     </div>
 </section>

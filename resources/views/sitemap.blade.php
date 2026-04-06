@@ -12,4 +12,12 @@
         <priority>{{ $page['priority'] }}</priority>
     </url>
 @endforeach
+@foreach ($posts as $post)
+    <url>
+        <loc>{{ $post['url'] }}</loc>
+        <lastmod>{{ $post['lastmod'] }}</lastmod>
+        <changefreq>{{ $post['freq'] }}</changefreq>
+        <priority>{{ $post['priority'] }}</priority>
+    </url>
+@endforeach
 </urlset>

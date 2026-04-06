@@ -240,6 +240,7 @@ main {
         0 0 28px rgba(25, 216, 255, 0.12),
         0 0 26px rgba(255, 107, 181, 0.10);
     position: relative;
+    isolation: isolate;
 }
 
 .hero-avatar::before,
@@ -250,6 +251,7 @@ main {
     pointer-events: none;
     clip-path: inherit;
     -webkit-clip-path: inherit;
+    z-index: 2;
 }
 
 .hero-avatar::before {
@@ -272,6 +274,8 @@ main {
     display: block;
     clip-path: inherit;
     -webkit-clip-path: inherit;
+    position: relative;
+    z-index: 1;
     filter: contrast(1.04) saturate(.98) brightness(.96) drop-shadow(0 0 15px rgba(255,107,181,0.15));
 }
 

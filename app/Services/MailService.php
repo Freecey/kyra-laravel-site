@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\ContactMessage;
-use App\Models\Setting;
+use App\Models\MessageReply;
 use Illuminate\Support\Facades\View;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -103,4 +103,36 @@ class MailService
         $mail->AltBody = strip_tags($html);
         $mail->send();
     }
+
+    /**
+     * Send an admin reply to the original contact sender.
+     */
+    public function sendReply(ContactMessage $contact, MessageReply $reply): void
+    {
+        $fromAddr = Setting::get('mail_from_address', 'hello@imkyra.be');
+        $fromName = Setting::get('mail_from_name', 'KYRA');
+
+        $html = View::make('mail.reply', [
+            'contact' => $contact,
+            'reply'   => $reply,
+        ])->render();
+
+        $mail = $this->mailer();
+        $mail->addAddress($contact->email, $contact->name);
+        $mail->setFrom($fromAddr, $fromName);
+        $mail->Subject = $reply->subject;
+        $mail->isHTML(true);
+        $mail->Body    = $html;
+        $mail->AltBody = strip_tags($reply->body);
+
+        foreach ($reply->attachments as $attachment) {
+            $fullPath = storage_path('app/' . $attachment->path);
+            if (file_exists($fullPath)) {
+                $mail->addAttachment($fullPath, $attachment->original_name);
+            }
+        }
+
+        $mail->send();
+    }
 }
+

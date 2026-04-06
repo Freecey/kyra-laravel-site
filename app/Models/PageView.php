@@ -12,6 +12,9 @@ class PageView extends Model
         'user_role',
         'ip_hash',
         'viewed_on',
+        'device_type',
+        'referer_host',
+        'session_hash',
     ];
 
     protected $casts = [

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
 use App\Models\PageView;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -20,10 +21,16 @@ class StatsController extends Controller
         $totalWeek  = PageView::where('viewed_on', '>=', $week)->count();
         $totalMonth = PageView::where('viewed_on', '>=', $month)->count();
 
-        // Visiteurs uniques (par ip_hash) sur 30 jours
+        // ── Visiteurs uniques (par ip_hash) sur 30 jours
         $uniqueMonth = PageView::where('viewed_on', '>=', $month)
             ->distinct('ip_hash')
             ->count('ip_hash');
+
+        // Visiteurs uniques par session sur 30 jours (plus précis)
+        $uniqueSessionsMonth = PageView::where('viewed_on', '>=', $month)
+            ->whereNotNull('session_hash')
+            ->distinct('session_hash')
+            ->count('session_hash');
 
         // ── Bar chart : 14 derniers jours ─────────────────────────────
         $days = collect();
@@ -62,11 +69,53 @@ class StatsController extends Controller
 
         $roleTotal = max($byRole->sum(), 1);
 
+        // ── Trafic par jour de la semaine (30 jours) ──────────────────
+        $rawDow = PageView::select(DB::raw("CAST(strftime('%w', viewed_on) AS INTEGER) as dow, count(*) as total"))
+            ->where('viewed_on', '>=', $month)
+            ->groupBy('dow')
+            ->pluck('total', 'dow');
+
+        $dowLabels = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+        $dow = collect(range(0, 6))->map(fn($d) => [
+            'label' => $dowLabels[$d],
+            'count' => (int) ($rawDow[$d] ?? 0),
+        ]);
+        $dowMax = max($dow->max('count'), 1);
+
+        // ── Répartition appareils (30 jours) ─────────────────────────
+        $byDevice = PageView::select('device_type', DB::raw('count(*) as total'))
+            ->where('viewed_on', '>=', $month)
+            ->groupBy('device_type')
+            ->pluck('total', 'device_type');
+
+        $deviceTotal = max($byDevice->sum(), 1);
+
+        // ── Top référents (30 jours) ──────────────────────────────────
+        $topReferers = PageView::select('referer_host', DB::raw('count(*) as total'))
+            ->where('viewed_on', '>=', $month)
+            ->whereNotNull('referer_host')
+            ->groupBy('referer_host')
+            ->orderByDesc('total')
+            ->limit(10)
+            ->get();
+
+        $directCount   = PageView::where('viewed_on', '>=', $month)->whereNull('referer_host')->count();
+        $refererMax    = max($topReferers->max('total') ?? 1, $directCount, 1);
+
+        // ── Messages ──────────────────────────────────────────────────
+        $totalMessages  = ContactMessage::count();
+        $unreadMessages = ContactMessage::where('is_read', false)->count();
+        $messagesMonth  = ContactMessage::where('created_at', '>=', $month)->count();
+
         return view('admin.stats.index', compact(
-            'totalToday', 'totalWeek', 'totalMonth', 'uniqueMonth',
+            'totalToday', 'totalWeek', 'totalMonth', 'uniqueMonth', 'uniqueSessionsMonth',
             'daily', 'dailyMax',
             'topPages', 'topMax',
-            'byRole', 'roleTotal'
+            'byRole', 'roleTotal',
+            'dow', 'dowMax',
+            'byDevice', 'deviceTotal',
+            'topReferers', 'directCount', 'refererMax',
+            'totalMessages', 'unreadMessages', 'messagesMonth'
         ));
     }
 }

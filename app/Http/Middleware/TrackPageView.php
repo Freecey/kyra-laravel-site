@@ -82,14 +82,53 @@ class TrackPageView
 
         try {
             PageView::create([
-                'path'       => '/' . ltrim($request->path(), '/'),
-                'route_name' => $request->route()?->getName(),
-                'user_role'  => $role,
-                'ip_hash'    => hash('sha256', $request->ip()),
-                'viewed_on'  => now()->toDateString(),
+                'path'         => '/' . ltrim($request->path(), '/'),
+                'route_name'   => $request->route()?->getName(),
+                'user_role'    => $role,
+                'ip_hash'      => hash('sha256', $request->ip()),
+                'viewed_on'    => now()->toDateString(),
+                'device_type'  => $this->detectDevice($request->userAgent() ?? ''),
+                'referer_host' => $this->extractRefererHost($request),
+                'session_hash' => $request->hasSession()
+                    ? hash('sha256', $request->session()->getId())
+                    : null,
             ]);
         } catch (\Throwable) {
             // Ne jamais bloquer la réponse pour un log d'analytics
         }
+    }
+
+    private function detectDevice(string $ua): string
+    {
+        $ua = strtolower($ua);
+        if (str_contains($ua, 'tablet') || str_contains($ua, 'ipad')) {
+            return 'tablet';
+        }
+        if (preg_match('/mobile|android|iphone|ipod|windows phone|blackberry|opera mini/', $ua)) {
+            return 'mobile';
+        }
+        return 'desktop';
+    }
+
+    private function extractRefererHost(Request $request): ?string
+    {
+        $referer = $request->headers->get('referer');
+        if (!$referer) {
+            return null;
+        }
+
+        $host = parse_url($referer, PHP_URL_HOST);
+        if (!$host) {
+            return null;
+        }
+
+        // Ignorer les références internes (même domaine)
+        $ownHost = parse_url($request->url(), PHP_URL_HOST);
+        if ($host === $ownHost) {
+            return null;
+        }
+
+        // Normaliser : enlever www.
+        return preg_replace('/^www\./', '', strtolower($host));
     }
 }

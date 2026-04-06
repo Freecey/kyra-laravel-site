@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\ReplyController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -56,6 +57,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::patch('/{message}/read', [MessageController::class, 'markRead'])->name('read');
             Route::patch('/{message}/unread', [MessageController::class, 'markUnread'])->name('unread');
             Route::delete('/{message}', [MessageController::class, 'destroy'])->name('destroy');
+            // Replies
+            Route::post('/{message}/replies', [ReplyController::class, 'store'])->name('replies.store');
+            Route::get('/replies/{reply}/attachments/{attachment}', [ReplyController::class, 'downloadAttachment'])->name('replies.attachment');
         });
 
         Route::prefix('settings')->name('settings.')->group(function () {

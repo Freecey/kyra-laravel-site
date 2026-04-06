@@ -72,16 +72,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('contactForm');
     const success = document.getElementById('formSuccess');
+    const altchaWidget = document.getElementById('altcha');
+    let altchaPayload = null;
+
+    if (altchaWidget) {
+        altchaWidget.addEventListener('statechange', (ev) => {
+            altchaPayload = ev.detail.state === 'verified' ? ev.detail.payload : null;
+        });
+    }
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const altchaWidget = document.getElementById('altcha');
+
+        if (!altchaPayload) {
+            alert('Veuillez compléter la vérification anti-spam avant d\'envoyer.');
+            return;
+        }
+
         const payload = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
             subject: document.getElementById('subject').value,
             message: document.getElementById('message').value,
-            altcha: altchaWidget ? altchaWidget.value : '',
+            altcha: altchaPayload,
             _token: document.querySelector('meta[name="csrf-token"]').content,
         };
         const response = await fetch('/contact', {
@@ -92,9 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
         if (data.success) {
             form.reset();
-            if (data.message) {
-                success.querySelector('p, span, div') ? (success.querySelector('p, span, div').textContent = data.message) : null;
-            }
+            altchaPayload = null;
+            success.textContent = data.message || 'Message envoyé !';
             success.classList.remove('d-none');
         } else if (!response.ok) {
             alert(data.message || 'Une erreur est survenue. Veuillez réessayer.');

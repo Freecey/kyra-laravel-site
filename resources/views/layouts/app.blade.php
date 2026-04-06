@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto gap-lg-4">
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Système</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">Capacités</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">Identité</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Statut</a></li>
                 </ul>
                 <div class="d-none d-lg-flex align-items-center gap-2 ms-lg-auto">

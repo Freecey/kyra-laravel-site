@@ -14,7 +14,12 @@ class FirstPostSeeder extends Seeder
     {
         $admin = User::where('role', 'admin')->first();
 
-        // ── Créer l'article ───────────────────────────────────────────
+        // ── Créer l'article (skip si déjà existant) ──────────────────
+        if (BlogPost::where('slug', 'bonjour-je-suis-kyra')->exists()) {
+            $this->command->info('FirstPostSeeder : article déjà présent, ignoré.');
+            return;
+        }
+
         $post = BlogPost::create([
             'title'            => 'Bonjour — je suis Kyra',
             'slug'             => 'bonjour-je-suis-kyra',

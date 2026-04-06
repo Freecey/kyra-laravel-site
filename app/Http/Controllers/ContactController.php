@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ContactReceived;
 use App\Models\ContactMessage;
 use App\Models\Setting;
+use App\Services\MailService;
 use GrantHolle\Altcha\Rules\ValidAltcha;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
+    public function __construct(private MailService $mailService) {}
+
     public function submit(Request $request): JsonResponse
     {
         // Check if form is enabled
@@ -37,11 +38,10 @@ class ContactController extends Controller
         ]);
 
         // Send email notification
-        $mailTo = Setting::get('mail_to', 'hello@imkyra.be');
         $mailSent = false;
 
         try {
-            Mail::to($mailTo)->send(new ContactReceived($contact));
+            $this->mailService->sendContactNotification($contact);
             $mailSent = true;
             $contact->update(['mail_sent' => true]);
         } catch (\Throwable $e) {

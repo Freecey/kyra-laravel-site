@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Mail;
 
 class ToolboxController extends Controller
 {
@@ -44,10 +44,11 @@ class ToolboxController extends Controller
         ]);
 
         try {
-            Mail::raw('Ceci est un email de test envoyé depuis la boîte à outils KYRA Admin.', function ($message) use ($request) {
-                $message->to($request->input('to'))
-                        ->subject('[KYRA] Test d\'envoi d\'email — ' . now()->format('d/m/Y H:i'));
-            });
+            app(MailService::class)->sendRaw(
+                $request->input('to'),
+                '[KYRA] Test d\'envoi d\'email — ' . now()->format('d/m/Y H:i'),
+                'Ceci est un email de test envoyé depuis la boîte à outils KYRA Admin.'
+            );
 
             return redirect()->route('admin.toolbox')->with('success', 'Email de test envoyé à ' . $request->input('to') . '.');
         } catch (\Throwable $e) {

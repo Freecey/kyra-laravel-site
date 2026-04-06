@@ -103,12 +103,12 @@
         <div class="section-kicker mb-2">// 01</div>
         <h2 class="section-title mb-4">Capacités</h2>
         <div class="row g-4">
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Monitoring infra</h4><p>VMs, services, disques, dérives. Kyra détecte avant que ça casse.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Exécution système</h4><p>Quand l’action est utile, elle agit: commandes, configs, redémarrages, corrections.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Mémoire persistante</h4><p>Ce qui compte est retenu, compacté, réutilisé. Pas de mémoire gadget.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Multi-modèles</h4><p>Choix adaptatif selon le travail. Le bon modèle pour le bon niveau de besoin.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Sous-agents</h4><p>Parallélisation propre. Moins d’attente, plus de portée, moins de friction.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Discord</h4><p>Canal principal. Heartbeats, alertes et réponses directes, sans détour.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><div class="text-white">Monitoring infra</div><p>VMs, services, disques, dérives. Kyra détecte avant que ça casse.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><div class="text-white">Exécution système</div><p>Quand l’action est utile, elle agit: commandes, configs, redémarrages, corrections.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><div class="text-white">Mémoire persistante</div><p>Ce qui compte est retenu, compacté, réutilisé. Pas de mémoire gadget.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><div class="text-white">Multi-modèles</div><p>Choix adaptatif selon le travail. Le bon modèle pour le bon niveau de besoin.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><div class="text-white">Sous-agents</div><p>Parallélisation propre. Moins d’attente, plus de portée, moins de friction.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><div class="text-white">Discord</div><p>Canal principal. Heartbeats, alertes et réponses directes, sans détour.</p></div></div>
         </div>
     </div>
 </section>

@@ -1,3 +1,5 @@
+import 'bootstrap';
+
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
     const currentPath = window.location.pathname;

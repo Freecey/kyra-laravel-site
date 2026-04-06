@@ -53,12 +53,14 @@ npm run build
 ok "Assets compilés"
 
 step "🚀  [5/7] Laravel optimize..."
+php artisan migrate --force
+php artisan db:seed --force
 php artisan optimize
 php artisan cache:clear
 php artisan view:clear
 php artisan config:cache
 php artisan route:cache
-ok "Cache Laravel rechargé"
+ok "Migrations, seeders et cache Laravel rechargés"
 
 step "🔑  [6/7] Permissions..."
 chown "$WEB_USER":"$WEB_GROUP" "$SITE_DIR"/ -R

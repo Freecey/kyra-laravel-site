@@ -23,6 +23,15 @@
             </div>
             <div class="col-lg-8">
                 <div class="surface-card p-4 p-md-5">
+                    @if(!$formEnabled)
+                    <div style="background:#0d1f2d; border:1px solid #ffbb0055; border-left:3px solid #ffbb00; border-radius:4px; padding:20px 24px; display:flex; align-items:flex-start; gap:16px; color:#c8d8e0;">
+                        <span style="color:#ffbb00; font-size:1.4rem; line-height:1; flex-shrink:0;">⚠</span>
+                        <div>
+                            <strong style="color:#ffbb00; display:block; margin-bottom:6px; letter-spacing:1px; text-transform:uppercase; font-size:13px;">Formulaire temporairement indisponible</strong>
+                            <span style="font-size:14px; opacity:.85;">Le formulaire de contact est momentanément désactivé. Revenez dans quelques instants ou contactez-moi via Discord.</span>
+                        </div>
+                    </div>
+                    @else
                     <form id="contactForm">
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -42,12 +51,16 @@
                             <label for="message" class="form-label">Message</label>
                             <textarea class="form-control" id="message" rows="7" required></textarea>
                         </div>
-                        <div class="mt-4 d-flex gap-3 flex-wrap">
+                        <div class="mt-4">
+                            <altcha-widget id="altcha" challengeurl="/altcha-challenge" name="altcha" hidefooter></altcha-widget>
+                        </div>
+                        <div class="mt-3 d-flex gap-3 flex-wrap">
                             <button type="submit" class="btn btn-primary">Envoyer</button>
                             <a href="{{ route('home') }}" class="btn btn-outline-light">Retour</a>
                         </div>
                     </form>
                     <div id="formSuccess" class="alert alert-success mt-4 d-none">Message envoyé.</div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -62,11 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const altchaWidget = document.getElementById('altcha');
         const payload = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
             subject: document.getElementById('subject').value,
             message: document.getElementById('message').value,
+            altcha: altchaWidget ? altchaWidget.value : '',
             _token: document.querySelector('meta[name="csrf-token"]').content,
         };
         const response = await fetch('/contact', {
@@ -77,7 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
         if (data.success) {
             form.reset();
+            if (data.message) {
+                success.querySelector('p, span, div') ? (success.querySelector('p, span, div').textContent = data.message) : null;
+            }
             success.classList.remove('d-none');
+        } else if (!response.ok) {
+            alert(data.message || 'Une erreur est survenue. Veuillez réessayer.');
         }
     });
 });

@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'altcha';
 
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');

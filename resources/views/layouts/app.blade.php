@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- ═══ FAVICON ═══ --}}
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="{{ asset('images/kyra.webp') }}" type="image/webp">
+
     {{-- ═══ TITRE & DESCRIPTION ═══ --}}
     <title>@yield('title', 'Kyra — Daemon IA local')</title>
     <meta name="description" content="@yield('meta_description', 'Kyra est un daemon d\'observation et d\'action IA. Monitoring infrastructure, mémoire persistante, multi-modèles, sous-agents et alertes Discord.')">

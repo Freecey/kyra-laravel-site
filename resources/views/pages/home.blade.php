@@ -6,7 +6,13 @@
 @section('og_image_alt', 'Kyra — Daemon IA, monitoring et action infrastructure')
 
 @push('preload')
-    <link rel="preload" as="image" href="{{ asset('images/kyra-banner2.webp') }}" type="image/webp">
+    <link rel="preload" as="image"
+          imagesrcset="{{ asset('images/kyra-banner2-800w.webp') }} 800w,
+                       {{ asset('images/kyra-banner2-1400w.webp') }} 1400w,
+                       {{ asset('images/kyra-banner2.webp') }} 2000w"
+          imagesizes="100vw"
+          type="image/webp"
+          fetchpriority="high">
     <link rel="preload" as="image" href="{{ asset('images/kyra.webp') }}" type="image/webp">
 @endpush
 
@@ -38,7 +44,7 @@
                                 {{ asset('images/kyra-banner2.webp') }} 2000w"
                         sizes="100vw"
                         type="image/webp">
-                    <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background" width="1536" height="1024" loading="eager">
+                    <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background" width="1536" height="1024" loading="eager" fetchpriority="high">
                 </picture>
             </div>
 

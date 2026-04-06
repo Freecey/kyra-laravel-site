@@ -54,6 +54,13 @@ class SettingSeeder extends Seeder
                 'description' => 'tls, ssl ou vide (aucun — pour localhost port 25)',
             ],
             [
+                'key'         => 'mail_verify_ssl',
+                'value'       => '1',
+                'label'       => 'Vérifier le certificat SSL',
+                'type'        => 'boolean',
+                'description' => 'Désactiver pour les certificats auto-signés',
+            ],
+            [
                 'key'         => 'mail_from_address',
                 'value'       => 'hello@imkyra.be',
                 'label'       => 'Adresse expéditeur',

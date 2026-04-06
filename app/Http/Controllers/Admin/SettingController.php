@@ -34,8 +34,9 @@ class SettingController extends Controller
 
         $data = $request->input('settings');
 
-        // Checkbox: absent = unchecked = 0
-        $data['form_enabled'] = isset($data['form_enabled']) ? '1' : '0';
+        // Checkboxes: absent from POST = unchecked = 0
+        $data['form_enabled']    = isset($data['form_enabled'])    ? '1' : '0';
+        $data['mail_verify_ssl'] = isset($data['mail_verify_ssl']) ? '1' : '0';
 
         foreach ($data as $key => $value) {
             // Never overwrite password with empty string — keep existing value

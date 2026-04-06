@@ -7,6 +7,11 @@ use App\Models\BlogPost;
 use App\Models\PostMedia;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\Encoders\WebpEncoder;
 
 class ApiPostMediaController extends Controller
 {
@@ -18,16 +23,24 @@ class ApiPostMediaController extends Controller
         ]);
 
         $file     = $request->file('file');
-        $filename = $file->getClientOriginalName();
-        $path     = $file->storeAs('blog/' . $post->id, $filename, 'public');
+        $slug     = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        $filename = ($slug ?: Str::random(12)) . '.webp';
+        $dir      = 'blog/' . $post->id;
+        $path     = $dir . '/' . $filename;
+
+        $manager  = new ImageManager(new Driver());
+        $encoded  = $manager->decode($file->getRealPath())
+                            ->encode(new WebpEncoder(quality: 85));
+
+        Storage::disk('public')->put($path, (string) $encoded);
 
         $media = PostMedia::create([
             'blog_post_id' => $post->id,
             'disk'         => 'public',
             'path'         => $path,
             'filename'     => $filename,
-            'mime_type'    => $file->getMimeType(),
-            'size'         => $file->getSize(),
+            'mime_type'    => 'image/webp',
+            'size'         => Storage::disk('public')->size($path),
             'alt'          => $request->input('alt'),
         ]);
 

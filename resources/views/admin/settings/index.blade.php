@@ -21,6 +21,7 @@
         $mailEncryption = $settings['mail_encryption'] ?? null;
         $mailFromAddr   = $settings['mail_from_address'] ?? null;
         $mailFromName   = $settings['mail_from_name'] ?? null;
+        $mailVerifySsl  = $settings['mail_verify_ssl'] ?? null;
       @endphp
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
@@ -74,6 +75,15 @@
                  placeholder="{{ $settings['mail_password']?->value ? '•••••••• (défini)' : 'Vide si serveur local' }}">
           <p class="form-hint">Laisser vide pour conserver le mot de passe actuel</p>
         </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" id="mail_verify_ssl" name="settings[mail_verify_ssl]" value="1"
+                 {{ old('settings.mail_verify_ssl', $mailVerifySsl?->value ?? '1') == '1' ? 'checked' : '' }}>
+          <label for="mail_verify_ssl">Vérifier le certificat SSL</label>
+        </div>
+        <p class="form-hint" style="margin-top:6px;">Désactiver si le serveur utilise un certificat auto-signé (<code style="color:var(--cyan)">verify_peer: false</code>).</p>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">

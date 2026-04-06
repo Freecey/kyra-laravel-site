@@ -176,7 +176,8 @@
       "excerpt": "...",
       "status": "published",
       "published_at": "2026-04-06T12:00:00Z",
-      "featured_media": { "id": 3, "url": "https://...", "alt": "..." }
+      "featured_image_url": "https://...",
+      "featured_image_position": "center"
     }
   ],
   "meta": {
@@ -211,7 +212,8 @@
     "meta_description": "...",
     "status": "published",
     "published_at": "2026-04-06T12:00:00Z",
-    "featured_media": { "id": 3, "url": "https://...", "alt": "..." },
+    "featured_image_url": "https://...",
+    "featured_image_position": "center",
     "media": [ { "id": 3, "url": "https://...", "alt": "...", "is_featured": true } ],
     "author": { "id": 1, "name": "Admin" }
   }
@@ -236,6 +238,7 @@
         <tr><td class="param-name">slug</td><td class="param-type">string</td><td><span class="param-optional">optionnel</span></td><td>Auto-généré depuis le titre si absent</td></tr>
         <tr><td class="param-name">excerpt</td><td class="param-type">string</td><td><span class="param-optional">optionnel</span></td><td>Résumé (max 1000)</td></tr>
         <tr><td class="param-name">meta_description</td><td class="param-type">string</td><td><span class="param-optional">optionnel</span></td><td>Description SEO (max 255)</td></tr>
+        <tr><td class="param-name">featured_image_position</td><td class="param-type">string</td><td><span class="param-optional">optionnel</span></td><td><code>top</code> · <code>top-center</code> · <code>center</code> · <code>center-bottom</code> · <code>bottom</code> (défaut : <code>center</code>)</td></tr>
       </table>
       <h4>Réponse 201</h4>
 <pre class="code-block">{ "data": { ...article... }, "message": "Article créé." }</pre>
@@ -259,6 +262,7 @@
         <tr><td class="param-name">slug</td><td class="param-type">string</td><td>Slug unique</td></tr>
         <tr><td class="param-name">excerpt</td><td class="param-type">string</td><td>Résumé (max 1000)</td></tr>
         <tr><td class="param-name">meta_description</td><td class="param-type">string</td><td>Description SEO (max 255)</td></tr>
+        <tr><td class="param-name">featured_image_position</td><td class="param-type">string</td><td><code>top</code> · <code>top-center</code> · <code>center</code> · <code>center-bottom</code> · <code>bottom</code></td></tr>
       </table>
       <h4>Réponse 200</h4>
 <pre class="code-block">{ "data": { ...article... }, "message": "Article mis à jour." }</pre>
@@ -414,7 +418,7 @@ Response 200: { data: [...posts], meta: { pagination: { total, per_page, current
 
 ### Get one article
 GET /posts/{id}
-Response 200: { data: { id, title, slug, excerpt, content, rendered_content, meta_description, status, published_at, featured_media, media[], author } }
+Response 200: { data: { id, title, slug, excerpt, content, rendered_content, meta_description, status, published_at, featured_image_url, featured_image_position, media[], author } }
 
 ### Create article
 POST /posts
@@ -424,12 +428,13 @@ Body (JSON):
   status           string  REQUIRED  "draft" | "published"
   slug             string  optional  (auto-generated from title if omitted)
   excerpt          string  optional  (max 1000 chars)
-  meta_description string  optional  (max 255 chars)
+  meta_description        string  optional  (max 255 chars)
+  featured_image_position  string  optional  "top" | "top-center" | "center" | "center-bottom" | "bottom" (default: "center")
 Response 201: { data: {...post}, message: "Article créé." }
 
 ### Update article
 PUT /posts/{id}
-Body (JSON): same fields as create, all optional (partial update)
+Body (JSON): same fields as create (including featured_image_position), all optional (partial update)
 Response 200: { data: {...post}, message: "Article mis à jour." }
 
 ### Publish article

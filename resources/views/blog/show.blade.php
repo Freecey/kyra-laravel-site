@@ -46,16 +46,24 @@
                 <img src="{{ $post->getFeaturedImageUrl() }}"
                      alt="{{ $post->featuredMedia->alt ?? $post->title }}"
                      class="blog-post__hero-img"
+                     style="object-position: center {{ match($post->featured_image_position ?? 'center') { 'top' => 'top', 'top-center' => '25%', 'center' => 'center', 'center-bottom' => '75%', 'bottom' => 'bottom' } }};"
                      loading="eager">
             </div>
         @endif
+
+        {{-- Fil d'Ariane --}}
+        <nav aria-label="breadcrumb" class="breadcrumb-kyra mb-4">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ url('/') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('blog.index') }}">Blog</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($post->title, 48) }}</li>
+            </ol>
+        </nav>
 
         {{-- Header --}}
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">
                 <div class="section-kicker mb-2">
-                    <a href="{{ route('blog.index') }}" style="color:inherit; text-decoration:none;">← Blog</a>
-                    &nbsp;·&nbsp;
                     {{ $post->published_at->translatedFormat('d M Y') }}
                 </div>
                 <h1 class="section-title mb-4">{{ $post->title }}</h1>
@@ -100,12 +108,12 @@
 <style>
 .blog-post__hero { border-radius: 8px; overflow: hidden; max-height: 480px; }
 .blog-post__hero-img { width: 100%; height: 100%; object-fit: cover; display: block; max-height: 480px; }
-.blog-post__excerpt { font-size: 1.15rem; color: var(--bs-secondary-color, #a0aec0); font-style: italic; }
-.blog-post__content { line-height: 1.85; font-size: 1.05rem; color: var(--bs-body-color, #dee2e6); }
+.blog-post__excerpt { font-size: 1.15rem; color: var(--kyra-cyan-soft, #5be7ff); font-style: italic; opacity: .85; }
+.blog-post__content { line-height: 1.85; font-size: 1.05rem; color: var(--kyra-text, #c8e8f0); }
 .blog-post__content h2,
 .blog-post__content h3,
 .blog-post__content h4 { color: #fff; margin-top: 2rem; margin-bottom: 1rem; }
-.blog-post__content p { margin-bottom: 1.25rem; }
+.blog-post__content p { margin-bottom: 1.25rem; color: var(--kyra-text, #c8e8f0); }
 .blog-post__content a { color: var(--cyan, #00c8ff); }
 .blog-post__content img.blog-media { max-width: 100%; border-radius: 6px; margin: 1.5rem 0; display: block; }
 .blog-post__content pre,

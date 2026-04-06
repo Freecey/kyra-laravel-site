@@ -17,6 +17,7 @@ class BlogPost extends Model
         'status',
         'published_at',
         'featured_media_id',
+        'featured_image_position',
         'author_id',
         'meta_description',
     ];

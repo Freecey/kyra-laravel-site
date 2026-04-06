@@ -56,6 +56,15 @@
         </select>
       </div>
 
+      <div class="form-group">
+        <label class="form-label" for="featured_image_position">Position image vedette</label>
+        <select id="featured_image_position" name="featured_image_position" class="form-control">
+          @foreach(['top' => 'Haut', 'top-center' => 'Haut-centre', 'center' => 'Centre (défaut)', 'center-bottom' => 'Centre-bas', 'bottom' => 'Bas'] as $val => $label)
+            <option value="{{ $val }}" {{ old('featured_image_position', $post?->featured_image_position ?? 'center') === $val ? 'selected' : '' }}>{{ $label }}</option>
+          @endforeach
+        </select>
+      </div>
+
       @if($post?->published_at)
         <div class="form-group">
           <label class="form-label">Publié le</label>

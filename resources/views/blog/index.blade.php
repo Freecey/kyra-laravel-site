@@ -7,6 +7,15 @@
 @section('content')
 <section class="py-5">
     <div class="container-fluid px-3 px-lg-4">
+
+        {{-- Fil d'Ariane --}}
+        <nav aria-label="breadcrumb" class="breadcrumb-kyra mb-3">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ url('/') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Blog</li>
+            </ol>
+        </nav>
+
         <div class="section-kicker mb-2">// Blog</div>
         <h1 class="section-title mb-5">Articles</h1>
 
@@ -26,6 +35,7 @@
                                     <img src="{{ $post->getFeaturedImageUrl() }}"
                                          alt="{{ $post->featuredMedia->alt ?? $post->title }}"
                                          class="blog-card__img"
+                                         style="object-position: center {{ match($post->featured_image_position ?? 'center') { 'top' => 'top', 'top-center' => '25%', 'center' => 'center', 'center-bottom' => '75%', 'bottom' => 'bottom' } }};"
                                          loading="lazy">
                                 </a>
                             @endif
@@ -72,7 +82,7 @@
 .blog-card__thumb:hover .blog-card__img { transform:scale(1.04); }
 .blog-card__title-link { color:var(--white, #fff); text-decoration:none; }
 .blog-card__title-link:hover { color:var(--cyan, #00c8ff); }
-.blog-card__excerpt { color:var(--bs-secondary-color, #a0aec0); font-size:.93rem; }
+.blog-card__excerpt { color:var(--kyra-text, #c8e8f0); font-size:.93rem; opacity:.8; }
 .btn-link-cyan { color:var(--cyan, #00c8ff); text-decoration:none; font-size:.9rem; font-weight:600; }
 .btn-link-cyan:hover { text-decoration:underline; }
 </style>

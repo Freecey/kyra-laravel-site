@@ -27,12 +27,13 @@ class AdminBlogController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title'            => 'required|string|max:255',
-            'slug'             => 'nullable|string|max:255|unique:blog_posts,slug',
-            'excerpt'          => 'nullable|string|max:1000',
-            'content'          => 'required|string',
-            'meta_description' => 'nullable|string|max:255',
-            'status'           => 'required|in:draft,published',
+            'title'                   => 'required|string|max:255',
+            'slug'                    => 'nullable|string|max:255|unique:blog_posts,slug',
+            'excerpt'                 => 'nullable|string|max:1000',
+            'content'                 => 'required|string',
+            'meta_description'        => 'nullable|string|max:255',
+            'status'                  => 'required|in:draft,published',
+            'featured_image_position' => 'nullable|in:top,top-center,center,center-bottom,bottom',
         ]);
 
         if (empty($data['slug'])) {
@@ -60,12 +61,13 @@ class AdminBlogController extends Controller
     public function update(Request $request, BlogPost $post)
     {
         $data = $request->validate([
-            'title'            => 'required|string|max:255',
-            'slug'             => ['required', 'string', 'max:255', Rule::unique('blog_posts', 'slug')->ignore($post->id)],
-            'excerpt'          => 'nullable|string|max:1000',
-            'content'          => 'required|string',
-            'meta_description' => 'nullable|string|max:255',
-            'status'           => 'required|in:draft,published',
+            'title'                   => 'required|string|max:255',
+            'slug'                    => ['required', 'string', 'max:255', Rule::unique('blog_posts', 'slug')->ignore($post->id)],
+            'excerpt'                 => 'nullable|string|max:1000',
+            'content'                 => 'required|string',
+            'meta_description'        => 'nullable|string|max:255',
+            'status'                  => 'required|in:draft,published',
+            'featured_image_position' => 'nullable|in:top,top-center,center,center-bottom,bottom',
         ]);
 
         if ($data['status'] === 'published' && !$post->published_at) {

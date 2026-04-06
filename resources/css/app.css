@@ -648,6 +648,32 @@ main {
     animation: cursor-blink 1s step-end infinite;
 }
 
+/* FIL D'ARIANE */
+.breadcrumb-kyra .breadcrumb {
+    background: transparent;
+    padding: 0;
+    font-family: 'Share Tech Mono', ui-monospace, monospace;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+.breadcrumb-kyra .breadcrumb-item a {
+    color: var(--kyra-muted);
+    text-decoration: none;
+    transition: color .2s;
+}
+.breadcrumb-kyra .breadcrumb-item a:hover {
+    color: var(--kyra-cyan);
+}
+.breadcrumb-kyra .breadcrumb-item.active {
+    color: var(--kyra-pink);
+}
+.breadcrumb-kyra .breadcrumb-item + .breadcrumb-item::before {
+    content: '›';
+    color: var(--kyra-line-strong);
+    padding: 0 .45em;
+}
+
 @media (max-width: 991.98px) {
     main {
         padding-top: 74px;

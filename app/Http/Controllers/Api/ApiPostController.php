@@ -50,12 +50,13 @@ class ApiPostController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'title'            => 'required|string|max:255',
-            'slug'             => 'nullable|string|max:255|unique:blog_posts,slug',
-            'excerpt'          => 'nullable|string|max:1000',
-            'content'          => 'required|string',
-            'meta_description' => 'nullable|string|max:255',
-            'status'           => 'required|in:draft,published',
+            'title'                   => 'required|string|max:255',
+            'slug'                    => 'nullable|string|max:255|unique:blog_posts,slug',
+            'excerpt'                 => 'nullable|string|max:1000',
+            'content'                 => 'required|string',
+            'meta_description'        => 'nullable|string|max:255',
+            'status'                  => 'required|in:draft,published',
+            'featured_image_position' => 'nullable|in:top,top-center,center,center-bottom,bottom',
         ]);
 
         if (empty($data['slug'])) {
@@ -79,12 +80,13 @@ class ApiPostController extends Controller
     public function update(Request $request, BlogPost $post): JsonResponse
     {
         $data = $request->validate([
-            'title'            => 'sometimes|required|string|max:255',
-            'slug'             => ['sometimes', 'required', 'string', 'max:255', Rule::unique('blog_posts', 'slug')->ignore($post->id)],
-            'excerpt'          => 'nullable|string|max:1000',
-            'content'          => 'sometimes|required|string',
-            'meta_description' => 'nullable|string|max:255',
-            'status'           => 'sometimes|required|in:draft,published',
+            'title'                   => 'sometimes|required|string|max:255',
+            'slug'                    => ['sometimes', 'required', 'string', 'max:255', Rule::unique('blog_posts', 'slug')->ignore($post->id)],
+            'excerpt'                 => 'nullable|string|max:1000',
+            'content'                 => 'sometimes|required|string',
+            'meta_description'        => 'nullable|string|max:255',
+            'status'                  => 'sometimes|required|in:draft,published',
+            'featured_image_position' => 'nullable|in:top,top-center,center,center-bottom,bottom',
         ]);
 
         if (isset($data['status']) && $data['status'] === 'published' && !$post->published_at) {
@@ -131,16 +133,17 @@ class ApiPostController extends Controller
     private function postSummary(BlogPost $post): array
     {
         return [
-            'id'                 => $post->id,
-            'title'              => $post->title,
-            'slug'               => $post->slug,
-            'excerpt'            => $post->excerpt,
-            'status'             => $post->status,
-            'published_at'       => $post->published_at?->toIso8601String(),
-            'featured_image_url' => $post->getFeaturedImageUrl(),
-            'meta_description'   => $post->meta_description,
-            'created_at'         => $post->created_at->toIso8601String(),
-            'updated_at'         => $post->updated_at->toIso8601String(),
+            'id'                       => $post->id,
+            'title'                    => $post->title,
+            'slug'                     => $post->slug,
+            'excerpt'                  => $post->excerpt,
+            'status'                   => $post->status,
+            'published_at'             => $post->published_at?->toIso8601String(),
+            'featured_image_url'       => $post->getFeaturedImageUrl(),
+            'featured_image_position'  => $post->featured_image_position ?? 'center',
+            'meta_description'         => $post->meta_description,
+            'created_at'               => $post->created_at->toIso8601String(),
+            'updated_at'               => $post->updated_at->toIso8601String(),
         ];
     }
 

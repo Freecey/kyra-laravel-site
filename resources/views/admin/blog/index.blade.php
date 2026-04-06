@@ -25,6 +25,7 @@
               <th>Titre</th>
               <th>Statut</th>
               <th>Publié le</th>
+              <th title="Vues (toutes dates)">Vues</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -48,6 +49,9 @@
                 </td>
                 <td style="font-size:12px; color:var(--text-muted);">
                   {{ $post->published_at?->format('d/m/Y') ?? '—' }}
+                </td>
+                <td style="font-size:12px; color:var(--text-muted); text-align:right;">
+                  {{ $viewCounts['/blog/' . $post->slug] ?? 0 }}
                 </td>
                 <td>
                   <div style="display:flex; gap:6px; flex-wrap:wrap;">

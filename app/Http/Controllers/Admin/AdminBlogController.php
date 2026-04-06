@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Models\PageView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -16,7 +17,12 @@ class AdminBlogController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('admin.blog.index', compact('posts'));
+        $viewCounts = PageView::whereIn('path', $posts->map(fn($p) => '/blog/' . $p->slug))
+            ->selectRaw('path, count(*) as total')
+            ->groupBy('path')
+            ->pluck('total', 'path');
+
+        return view('admin.blog.index', compact('posts', 'viewCounts'));
     }
 
     public function create()
@@ -55,7 +61,8 @@ class AdminBlogController extends Controller
     public function edit(BlogPost $post)
     {
         $post->load(['media', 'featuredMedia']);
-        return view('admin.blog.edit', compact('post'));
+        $viewCount = PageView::where('path', '/blog/' . $post->slug)->count();
+        return view('admin.blog.edit', compact('post', 'viewCount'));
     }
 
     public function update(Request $request, BlogPost $post)

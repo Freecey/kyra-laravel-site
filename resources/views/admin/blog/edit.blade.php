@@ -4,7 +4,12 @@
 
 @section('content')
 <div style="margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-  <a href="{{ route('admin.blog.index') }}" class="btn btn-sm btn-muted">← Retour</a>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <a href="{{ route('admin.blog.index') }}" class="btn btn-sm btn-muted">← Retour</a>
+    <span style="font-size:12px; color:var(--text-muted);" title="Nombre total de vues enregistrées">
+      👁 {{ $viewCount }} vue{{ $viewCount !== 1 ? 's' : '' }}
+    </span>
+  </div>
   <div style="display:flex; gap:8px; flex-wrap:wrap;">
     @if($post->isPublished())
       <form method="POST" action="{{ route('admin.blog.unpublish', $post) }}">

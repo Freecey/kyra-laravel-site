@@ -70,7 +70,9 @@ class StatsController extends Controller
         $roleTotal = max($byRole->sum(), 1);
 
         // ── Trafic par jour de la semaine (30 jours) ──────────────────
-        $rawDow = PageView::select(DB::raw("CAST(strftime('%w', viewed_on) AS INTEGER) as dow, count(*) as total"))
+        // DAYOFWEEK() : 1=Dim … 7=Sam (MySQL/MariaDB)
+        // On soustrait 1 pour obtenir 0=Dim … 6=Sam, identique à strftime('%w')
+        $rawDow = PageView::select(DB::raw("(DAYOFWEEK(viewed_on) - 1) as dow, count(*) as total"))
             ->where('viewed_on', '>=', $month)
             ->groupBy('dow')
             ->pluck('total', 'dow');

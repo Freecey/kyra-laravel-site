@@ -16,6 +16,9 @@ use App\Http\Controllers\Admin\ToolboxController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Member\ProfileController as MemberProfileController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Admin\AdminBlogController;
+use App\Http\Controllers\Admin\AdminBlogMediaController;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -39,6 +42,12 @@ Route::get('/protocole', function () {
 })->name('protocole');
 
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// ─── Blog (public) ───────────────────────────────────────────────────────────
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/{slug}', [BlogController::class, 'show'])->name('show');
+});
 
 // ─── Admin ───────────────────────────────────────────────────────────────────
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -79,9 +88,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('profile')->name('profile.')->group(function () {
             Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
             Route::put('/', [AdminProfileController::class, 'update'])->name('update');
+            Route::post('/tokens', [AdminProfileController::class, 'tokenCreate'])->name('tokens.create');
+            Route::delete('/tokens/{tokenId}', [AdminProfileController::class, 'tokenRevoke'])->name('tokens.revoke');
         });
 
         Route::get('/stats', [StatsController::class, 'index'])->name('stats');
+
+        // ─── Blog admin ───────────────────────────────────────────────────────
+        Route::prefix('blog')->name('blog.')->group(function () {
+            Route::get('/', [AdminBlogController::class, 'index'])->name('index');
+            Route::get('/create', [AdminBlogController::class, 'create'])->name('create');
+            Route::post('/', [AdminBlogController::class, 'store'])->name('store');
+            Route::get('/{post}/edit', [AdminBlogController::class, 'edit'])->name('edit');
+            Route::put('/{post}', [AdminBlogController::class, 'update'])->name('update');
+            Route::delete('/{post}', [AdminBlogController::class, 'destroy'])->name('destroy');
+            Route::patch('/{post}/publish', [AdminBlogController::class, 'publish'])->name('publish');
+            Route::patch('/{post}/unpublish', [AdminBlogController::class, 'unpublish'])->name('unpublish');
+            // Media
+            Route::post('/{post}/media', [AdminBlogMediaController::class, 'store'])->name('media.store');
+            Route::patch('/{post}/media/{media}/featured', [AdminBlogMediaController::class, 'setFeatured'])->name('media.featured');
+            Route::delete('/{post}/media/{media}', [AdminBlogMediaController::class, 'destroy'])->name('media.destroy');
+        });
 
         Route::prefix('toolbox')->name('toolbox')->group(function () {
             Route::get('/', [ToolboxController::class, 'index']);

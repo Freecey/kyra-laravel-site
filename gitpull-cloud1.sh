@@ -60,7 +60,8 @@ php artisan cache:clear
 php artisan view:clear
 php artisan config:cache
 php artisan route:cache
-ok "Migrations, seeders et cache Laravel rechargés"
+php artisan storage:link --force 2>/dev/null || true
+ok "Migrations, seeders, cache et lien storage rechargés"
 
 step "🔑  [6/7] Permissions..."
 chown "$WEB_USER":"$WEB_GROUP" "$SITE_DIR"/ -R

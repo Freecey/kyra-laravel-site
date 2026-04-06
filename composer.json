@@ -10,6 +10,7 @@
         "grantholle/laravel-altcha": "^2.2",
         "intervention/image-laravel": "^4.0",
         "laravel/framework": "^13.0",
+        "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0",
         "phpmailer/phpmailer": "^7.0"
     },

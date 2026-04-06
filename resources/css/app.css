@@ -263,6 +263,52 @@ body > * {
     font-weight: 800;
 }
 
+.manifesto {
+    border-left: 3px solid rgba(165, 180, 252, 0.6);
+    padding-left: 1rem;
+}
+
+.quote-block {
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #e5e7eb;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 1.25rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: .25rem;
+    top: .25rem;
+    bottom: .25rem;
+    width: 1px;
+    background: rgba(165, 180, 252, 0.28);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -.1rem;
+    top: .4rem;
+    width: .75rem;
+    height: .75rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #a5b4fc, #6366f1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
 @media (max-width: 991.98px) {
     .hero-section {
         padding-top: 6rem;

@@ -226,6 +226,42 @@ main {
 .hero-avatar {
     max-width: 420px;
     margin: 0 auto;
+    padding: 10px;
+    background: rgba(2, 6, 10, 0.92);
+    border: 2px solid rgba(255, 107, 181, 0.95);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+    box-shadow:
+        0 0 0 1px rgba(0,0,0,.8),
+        0 0 24px rgba(255, 107, 181, 0.10),
+        0 0 0 1px rgba(25, 216, 255, 0.08) inset;
+    position: relative;
+}
+
+.hero-avatar::before,
+.hero-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.hero-avatar::before {
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    clip-path: inherit;
+}
+
+.hero-avatar::after {
+    background: linear-gradient(180deg, rgba(25,216,255,0.12), transparent 24%, transparent 76%, rgba(255,107,181,0.10));
+    clip-path: inherit;
+    mix-blend-mode: screen;
+    opacity: .55;
+}
+
+.hero-avatar img {
+    width: 100%;
+    display: block;
+    clip-path: inherit;
+    filter: contrast(1.02) saturate(.95);
 }
 
 .hero-card,

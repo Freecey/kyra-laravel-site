@@ -427,20 +427,15 @@
 <div class="doc-section">
   <h3>⌬ Manifestes</h3>
 
-  <div class="info-box">
-    Endpoint <strong>public</strong> — aucune authentification requise. Retourne uniquement les manifestes actifs (dates respectées).
-    La gestion (création, édition, suppression, épinglage) se fait via l'interface admin.
-  </div>
-
-  {{-- GET /manifestes --}}
+  {{-- GET /manifestes (public) --}}
   <div class="endpoint">
     <div class="endpoint-header">
       <span class="method method-get">GET</span>
       <span class="endpoint-path">/api/v1/manifestes</span>
-      <span class="endpoint-desc">Lister les manifestes actifs</span>
+      <span class="endpoint-desc">Manifestes actifs — <strong>public</strong>, sans auth</span>
     </div>
     <div class="endpoint-body">
-      <div class="info-box" style="margin-bottom:12px;">Route publique — pas de token requis.</div>
+      <div class="info-box" style="margin-bottom:12px;">Route publique — pas de token requis. Filtre automatiquement sur les dates starts_at / ends_at.</div>
       <h4>Réponse 200</h4>
 <pre class="code-block">{
   "data": [
@@ -451,14 +446,126 @@
       "is_pinned": true,
       "sort_order": 0,
       "starts_at": null,
-      "ends_at": null
+      "ends_at": null,
+      "created_at": "2026-04-06T21:07:00Z",
+      "updated_at": "2026-04-06T21:07:00Z"
     }
   ]
 }</pre>
       <h4>Tri</h4>
-      <p style="font-size:12px;color:var(--text-muted);margin:0;">Les résultats sont triés par : épinglés en premier, puis <code>sort_order</code> ASC, puis <code>id</code> DESC.</p>
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Épinglés en premier → <code>sort_order</code> ASC → <code>id</code> DESC.</p>
     </div>
   </div>
+
+  {{-- GET /manifestes/all (admin) --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-get">GET</span>
+      <span class="endpoint-path">/api/v1/manifestes/all</span>
+      <span class="endpoint-desc">Tous les manifestes — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <h4>Paramètres</h4>
+      <table class="param-table">
+        <tr><th>Param</th><th>Type</th><th>Description</th></tr>
+        <tr><td class="param-name">active</td><td class="param-type">0 | 1</td><td>Optionnel — filtrer par actif / inactif. Omis = tous.</td></tr>
+      </table>
+      <h4>Réponse 200</h4>
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Même format que la route publique, sans filtre de date.</p>
+    </div>
+  </div>
+
+  {{-- GET /manifestes/{id} --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-get">GET</span>
+      <span class="endpoint-path">/api/v1/manifestes/{id}</span>
+      <span class="endpoint-desc">Détail d'un manifeste — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <h4>Réponse 200</h4>
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Retourne l'objet complet, même format que ci-dessus.</p>
+    </div>
+  </div>
+
+  {{-- POST /manifestes --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-post">POST</span>
+      <span class="endpoint-path">/api/v1/manifestes</span>
+      <span class="endpoint-desc">Créer un manifeste — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <h4>Corps JSON</h4>
+      <table class="param-table">
+        <tr><th>Champ</th><th>Type</th><th></th><th>Description</th></tr>
+        <tr><td class="param-name">quote</td><td class="param-type">string</td><td><span class="param-required">requis</span></td><td>Citation principale (max 500 chars)</td></tr>
+        <tr><td class="param-name">body</td><td class="param-type">string</td><td><span class="param-optional">optionnel</span></td><td>Développement (max 2000 chars)</td></tr>
+        <tr><td class="param-name">is_pinned</td><td class="param-type">boolean</td><td><span class="param-optional">optionnel</span></td><td>Affiché en tête (défaut : false)</td></tr>
+        <tr><td class="param-name">sort_order</td><td class="param-type">integer</td><td><span class="param-optional">optionnel</span></td><td>Ordre croissant (défaut : 0)</td></tr>
+        <tr><td class="param-name">starts_at</td><td class="param-type">datetime</td><td><span class="param-optional">optionnel</span></td><td>Début de visibilité (ISO 8601)</td></tr>
+        <tr><td class="param-name">ends_at</td><td class="param-type">datetime</td><td><span class="param-optional">optionnel</span></td><td>Fin de visibilité (≥ starts_at)</td></tr>
+      </table>
+      <h4>Réponse 201</h4>
+<pre class="code-block">{ "data": {...manifeste}, "message": "Manifeste créé." }</pre>
+    </div>
+  </div>
+
+  {{-- PUT /manifestes/{id} --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-put">PUT</span>
+      <span class="endpoint-path">/api/v1/manifestes/{id}</span>
+      <span class="endpoint-desc">Modifier un manifeste — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <h4>Corps JSON</h4>
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Mêmes champs que la création, tous optionnels (mise à jour partielle).</p>
+      <h4>Réponse 200</h4>
+<pre class="code-block">{ "data": {...manifeste}, "message": "Manifeste mis à jour." }</pre>
+    </div>
+  </div>
+
+  {{-- PATCH pin / unpin --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-patch">PATCH</span>
+      <span class="endpoint-path">/api/v1/manifestes/{id}/pin</span>
+      <span class="endpoint-desc">Épingler — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Passe <code>is_pinned</code> à <code>true</code>. Aucun corps requis.</p>
+      <h4>Réponse 200</h4>
+<pre class="code-block">{ "data": {...manifeste}, "message": "Manifeste épinglé." }</pre>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-patch">PATCH</span>
+      <span class="endpoint-path">/api/v1/manifestes/{id}/unpin</span>
+      <span class="endpoint-desc">Désépingler — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Passe <code>is_pinned</code> à <code>false</code>. Aucun corps requis.</p>
+      <h4>Réponse 200</h4>
+<pre class="code-block">{ "data": {...manifeste}, "message": "Manifeste désépinglé." }</pre>
+    </div>
+  </div>
+
+  {{-- DELETE /manifestes/{id} --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-delete">DELETE</span>
+      <span class="endpoint-path">/api/v1/manifestes/{id}</span>
+      <span class="endpoint-desc">Supprimer — 🔒 auth requise</span>
+    </div>
+    <div class="endpoint-body">
+      <h4>Réponse 200</h4>
+<pre class="code-block">{ "message": "Manifeste supprimé." }</pre>
+    </div>
+  </div>
+
 </div>
 
 {{-- ── Erreurs communes ────────────────────────────────────────────────── --}}
@@ -605,7 +712,7 @@ Response 200: { data: {...manifeste}, message: "Manifeste épinglé." }
 
 PATCH /manifestes/{id}/unpin
 No body. Sets is_pinned to false.
-Response 200: { data: {...manifeste}, message: "Manifeste déépinglé." }
+Response 200: { data: {...manifeste}, message: "Manifeste désépinglé." }
 
 DELETE /manifestes/{id}
 Response 200: { message: "Manifeste supprimé." }

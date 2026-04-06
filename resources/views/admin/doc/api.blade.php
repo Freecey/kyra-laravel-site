@@ -570,11 +570,45 @@ Response 200: { message: "Média supprimé." }
 
 ---
 
-### Manifestes (public — no auth required)
+### Manifestes — public (no auth)
 GET /manifestes
-No params. Returns all currently active manifestes (start/end dates respected).
-Response 200: { data: [ { id, quote, body, is_pinned, sort_order, starts_at, ends_at } ] }
-Sorting: pinned first, then sort_order ASC, then id DESC.
+Returns only active manifestes (start/end dates respected).
+Response 200: { data: [ { id, quote, body, is_pinned, sort_order, starts_at, ends_at, created_at, updated_at } ] }
+Sorting: pinned first → sort_order ASC → id DESC.
+
+### Manifestes — admin (auth required)
+
+GET /manifestes/all
+Query params (optional): active=1|0 (filter by active/inactive; omit to get all)
+Response 200: { data: [...manifestes] }
+
+GET /manifestes/{id}
+Response 200: { data: {...manifeste} }
+
+POST /manifestes
+Body (JSON):
+  quote       string   REQUIRED  Main quote (max 500)
+  body        string   optional  Body text (max 2000)
+  is_pinned   boolean  optional  Pin to top (default false)
+  sort_order  integer  optional  Ascending order key (default 0)
+  starts_at   datetime optional  Visibility start (ISO 8601)
+  ends_at     datetime optional  Visibility end ≥ starts_at
+Response 201: { data: {...manifeste}, message: "Manifeste créé." }
+
+PUT /manifestes/{id}
+Body (JSON): same fields as create, all optional (partial update)
+Response 200: { data: {...manifeste}, message: "Manifeste mis à jour." }
+
+PATCH /manifestes/{id}/pin
+No body. Sets is_pinned to true.
+Response 200: { data: {...manifeste}, message: "Manifeste épinglé." }
+
+PATCH /manifestes/{id}/unpin
+No body. Sets is_pinned to false.
+Response 200: { data: {...manifeste}, message: "Manifeste déépinglé." }
+
+DELETE /manifestes/{id}
+Response 200: { message: "Manifeste supprimé." }
 
 ---
 

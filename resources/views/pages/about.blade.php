@@ -9,8 +9,12 @@
         <h1 class="section-title mb-5">Fichier identité</h1>
         <div class="row g-5 align-items-start">
             <div class="col-xl-5 col-lg-6">
-                <div class="avatar-frame">
-                    <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full">
+                <div class="scan-frame">
+                    <span class="sf-corner sf-tl"></span>
+                    <span class="sf-corner sf-tr"></span>
+                    <span class="sf-corner sf-bl"></span>
+                    <span class="sf-corner sf-br"></span>
+                    <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
                 </div>
             </div>
             <div class="col-xl-7 col-lg-6">

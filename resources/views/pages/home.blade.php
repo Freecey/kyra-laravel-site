@@ -7,21 +7,23 @@
     <div class="container-fluid px-3 px-lg-4">
         <div class="hero-panel">
             <div class="hero-background">
-                <img src="{{ asset('images/kyra-banner.png') }}" alt="Kyra hero background">
+                <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background">
             </div>
 
             <div class="row align-items-center g-5 hero-content">
                 <div class="col-xl-4 col-lg-5 order-lg-1 order-2">
-                    <div class="hero-avatar">
-                        <div class="hero-avatar-inner">
-                            <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
+                    <div class="hero-avatar-ring">
+                        <div class="hero-avatar">
+                            <div class="hero-avatar-inner">
+                                <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-8 col-lg-7 order-lg-2 order-1">
                     <div class="hero-card hero-card-overlay">
                         <div class="hero-badge">// AGENT IA — SYSTÈME LOCAL — INFRASTRUCTURE PRIVÉE</div>
-                        <h1 class="hero-title">KYRA</h1>
+                        <h1 class="hero-title">KY<span class="accent">RA</span></h1>
                         <p class="hero-subtitle">
                             Daemon d’observation et d’action. Kyra lit les écarts, suit les signaux faibles,
                             garde la mémoire utile et agit quand c’est nécessaire.
@@ -90,7 +92,13 @@
                     <h2 class="section-title mb-3">Fichier d’identité</h2>
                     <div class="row g-4 align-items-center">
                         <div class="col-md-5">
-                            <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="img-fluid border border-secondary border-opacity-25">
+                            <div class="scan-frame">
+                                <span class="sf-corner sf-tl"></span>
+                                <span class="sf-corner sf-tr"></span>
+                                <span class="sf-corner sf-bl"></span>
+                                <span class="sf-corner sf-br"></span>
+                                <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                            </div>
                         </div>
                         <div class="col-md-7">
                             <div class="terminal">

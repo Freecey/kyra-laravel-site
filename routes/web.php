@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SitemapController;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -36,3 +37,11 @@ Route::post('/contact', function (Request $request) {
     
     return response()->json(['success' => true]);
 });
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+Route::get('/robots.txt', function () {
+    $content = "User-agent: *\nDisallow: /storage/\nDisallow: /vendor/\n\nSitemap: " . route('sitemap') . "\n";
+    return response($content, 200)->header('Content-Type', 'text/plain');
+});
+

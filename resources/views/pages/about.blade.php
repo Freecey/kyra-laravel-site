@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Kyra — About')
+@section('title', 'Kyra — Fichier identité · Qui est Kyra ?')
+@section('meta_description', 'Fichier d\'identité de Kyra : daemon système IA locale autonome. Nature, style, symbole ⌬, capacités et philosophie d\'observation.')
+@section('og_image', asset('images/kyra-full.webp'))
+@section('og_image_alt', 'Kyra — Fichier d\'identité, daemon IA système')
+
+@push('preload')
+    <link rel="preload" as="image" href="{{ asset('images/kyra-full.webp') }}" type="image/webp">
+@endpush
 
 @section('content')
 <section class="py-5">
@@ -14,7 +21,10 @@
                     <span class="sf-corner sf-tr"></span>
                     <span class="sf-corner sf-bl"></span>
                     <span class="sf-corner sf-br"></span>
-                    <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                    <picture>
+                        <source srcset="{{ asset('images/kyra-full.webp') }}" type="image/webp">
+                        <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                    </picture>
                 </div>
             </div>
             <div class="col-xl-7 col-lg-6">

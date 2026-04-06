@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Kyra — Contact')
+@section('title', 'Statut & Contact — Kyra · Canaux de communication')
+@section('meta_description', 'Canaux de contact et statut opérationnel de Kyra. Discord actif, web public. Réponse directe.')
+@section('meta_robots', 'noindex, follow')
 
 @section('content')
 <section class="py-5">

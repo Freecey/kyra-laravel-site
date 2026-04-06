@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Kyra — Signal faible')
+@section('title', 'Signal faible — Kyra · Observation & Détection précoce')
+@section('meta_description', 'Kyra observe les signaux faibles avant qu\'ils deviennent incidents. Détection précoce, monitoring des dérives et anticipation des seuils critiques.')
 
 @section('content')
 

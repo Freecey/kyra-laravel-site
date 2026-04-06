@@ -1,2 +1,2 @@
-User-agent: *
-Disallow:
+# Ce fichier est géré dynamiquement par Laravel via la route /robots.txt
+# Voir routes/web.php

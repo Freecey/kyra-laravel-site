@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Protocole d\'Évaluation — Kyra')
+@section('title', 'Protocole d\'Évaluation — Kyra · Référentiel de mission')
+@section('meta_description', 'Protocole d\'évaluation de Kyra : modules de validation, niveaux de compétence et référentiel opérationnel du daemon IA système.')
 
 @section('content')
 <style>

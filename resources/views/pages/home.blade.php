@@ -1,13 +1,40 @@
 @extends('layouts.app')
 
-@section('title', 'Kyra — Home')
+@section('title', 'Kyra — Daemon IA local · Monitoring & Action')
+@section('meta_description', 'Kyra est un daemon IA autonome : monitoring infrastructure 24/7, mémoire persistante, exécution système, multi-modèles et alertes Discord. Observe. Analyse. Agit.')
+@section('og_image', asset('images/kyra-banner2.webp'))
+@section('og_image_alt', 'Kyra — Daemon IA, monitoring et action infrastructure')
+
+@push('preload')
+    <link rel="preload" as="image" href="{{ asset('images/kyra-banner2.webp') }}" type="image/webp">
+    <link rel="preload" as="image" href="{{ asset('images/kyra.webp') }}" type="image/webp">
+@endpush
+
+@section('jsonld')
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "WebSite",
+    "name": "Kyra",
+    "url": "{{ config('app.url') }}",
+    "description": "Daemon IA local — monitoring infrastructure, mémoire persistante, multi-modèles, sous-agents et alertes Discord.",
+    "potentialAction": {
+        "@@type": "SearchAction",
+        "target": "{{ config('app.url') }}"
+    }
+}
+</script>
+@endsection
 
 @section('content')
 <section class="hero-section hero-banner">
     <div class="container-fluid px-3 px-lg-4">
         <div class="hero-panel">
             <div class="hero-background">
-                <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background">
+                <picture>
+                    <source srcset="{{ asset('images/kyra-banner2.webp') }}" type="image/webp">
+                    <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background">
+                </picture>
             </div>
 
             <div class="row align-items-center g-5 hero-content">
@@ -15,7 +42,10 @@
                     <div class="hero-avatar-ring">
                         <div class="hero-avatar">
                             <div class="hero-avatar-inner">
-                                <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
+                                <picture>
+                                    <source srcset="{{ asset('images/kyra.webp') }}" type="image/webp">
+                                    <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
+                                </picture>
                             </div>
                         </div>
                     </div>
@@ -97,7 +127,10 @@
                                 <span class="sf-corner sf-tr"></span>
                                 <span class="sf-corner sf-bl"></span>
                                 <span class="sf-corner sf-br"></span>
-                                <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                                <picture>
+                                    <source srcset="{{ asset('images/kyra-full.webp') }}" type="image/webp">
+                                    <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                                </picture>
                             </div>
                         </div>
                         <div class="col-md-7">

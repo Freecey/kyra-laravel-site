@@ -1,7 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid px-3 px-lg-4">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('images/kyra.png') }}" alt="Kyra">
+            <picture>
+                <source srcset="{{ asset('images/kyra.webp') }}" type="image/webp">
+                <img src="{{ asset('images/kyra.png') }}" alt="Kyra">
+            </picture>
             <span>KY<span class="navbar-brand-accent">RA</span></span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Basculer la navigation">

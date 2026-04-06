@@ -381,4 +381,117 @@
   </div>
 </div>
 
+{{-- ── Prompt agent IA ──────────────────────────────────────────────────── --}}
+<div class="doc-section">
+  <h3>◎ Prompt pour agent IA</h3>
+
+  <div class="info-box" style="margin-bottom:16px;">
+    Colle ce texte dans le system prompt ou le context de ton agent IA pour lui donner accès à l'API directement, ou pour qu'il génère ses propres <em>tools</em>.
+  </div>
+
+  <div style="position:relative;">
+    <button id="copy-prompt-btn" onclick="copyPrompt()" style="position:absolute;top:10px;right:10px;background:rgba(0,200,255,0.1);border:1px solid var(--cyan);color:var(--cyan);padding:4px 12px;border-radius:3px;font-size:11px;letter-spacing:1px;cursor:pointer;text-transform:uppercase;font-family:inherit;">
+      Copier
+    </button>
+    <pre class="code-block" id="agent-prompt" style="white-space:pre-wrap;padding-right:90px;">## Kyra Blog API
+
+You have access to the Kyra blog REST API. Always send:
+  Authorization: Bearer {TOKEN}
+  Accept: application/json
+  Content-Type: application/json  (for POST/PUT)
+
+Base URL: {{ config('app.url') }}/api/v1
+
+---
+
+### List articles
+GET /posts
+Query params (all optional):
+  status    = "draft" | "published"
+  per_page  = integer (default 15)
+  page      = integer
+Response 200: { data: [...posts], meta: { pagination: { total, per_page, current_page, last_page } } }
+
+### Get one article
+GET /posts/{id}
+Response 200: { data: { id, title, slug, excerpt, content, rendered_content, meta_description, status, published_at, featured_media, media[], author } }
+
+### Create article
+POST /posts
+Body (JSON):
+  title            string  REQUIRED
+  content          string  REQUIRED  (Markdown)
+  status           string  REQUIRED  "draft" | "published"
+  slug             string  optional  (auto-generated from title if omitted)
+  excerpt          string  optional  (max 1000 chars)
+  meta_description string  optional  (max 255 chars)
+Response 201: { data: {...post}, message: "Article créé." }
+
+### Update article
+PUT /posts/{id}
+Body (JSON): same fields as create, all optional (partial update)
+Response 200: { data: {...post}, message: "Article mis à jour." }
+
+### Publish article
+PATCH /posts/{id}/publish
+No body required.
+Response 200: { data: {...post}, message: "Article publié." }
+
+### Unpublish article
+PATCH /posts/{id}/unpublish
+No body required.
+Response 200: { data: {...post}, message: "Article dépublié." }
+
+### Delete article
+DELETE /posts/{id}
+Deletes article and all associated media files.
+Response 200: { message: "Article supprimé." }
+
+### Upload media to an article
+POST /posts/{id}/media
+Multipart form-data:
+  file  file    REQUIRED  Image (jpg, jpeg, png, webp, gif, svg, max 10 MB)
+  alt   string  optional  Alt text (max 255 chars)
+Response 201: { data: { id, url, filename, alt, is_featured }, message: "Média ajouté." }
+
+### Set featured image
+PATCH /posts/{id}/media/{mediaId}/featured
+No body required. Media must belong to the article.
+Response 200: { message: "Image vedette définie." }
+
+### Delete media
+DELETE /posts/{id}/media/{mediaId}
+Deletes file from storage and DB record.
+Response 200: { message: "Média supprimé." }
+
+---
+
+### Error codes
+401  Missing or invalid token
+403  Forbidden (resource does not belong to this context)
+404  Resource not found
+422  Validation error — check field constraints above
+500  Internal server error</pre>
+  </div>
+</div>
+
+@push('scripts')
+<script>
+function copyPrompt() {
+  var text = document.getElementById('agent-prompt').innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copy-prompt-btn');
+    btn.textContent = 'Copié !';
+    btn.style.color = 'var(--success, #00c896)';
+    btn.style.borderColor = 'var(--success, #00c896)';
+    setTimeout(function() {
+      btn.textContent = 'Copier';
+      btn.style.color = 'var(--cyan)';
+      btn.style.borderColor = 'var(--cyan)';
+    }, 2000);
+  });
+}
+</script>
+@endpush
+
 @endsection

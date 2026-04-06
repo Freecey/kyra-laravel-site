@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AuthController;
@@ -18,29 +17,15 @@ use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Member\ProfileController as MemberProfileController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Admin\AdminBlogMediaController;
 
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
-
-Route::get('/about', function () {
-    return view('pages.about');
-})->name('about');
-
-Route::get('/contact', function () {
-    $formEnabled = \App\Models\Setting::get('form_enabled', true);
-    return view('pages.contact', compact('formEnabled'));
-})->name('contact');
-
-Route::get('/signal', function () {
-    return view('pages.signal');
-})->name('signal');
-
-Route::get('/protocole', function () {
-    return view('pages.protocole');
-})->name('protocole');
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/signal', [PageController::class, 'signal'])->name('signal');
+Route::get('/protocole', [PageController::class, 'protocole'])->name('protocole');
 
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 

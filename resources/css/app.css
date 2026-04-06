@@ -224,7 +224,7 @@ main {
 }
 
 .hero-avatar {
-    --hex: polygon(50% 0%, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+    --hex: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     max-width: 420px;
     margin: 0 auto;
     padding: 12px;
@@ -269,7 +269,7 @@ main {
     display: block;
     clip-path: inherit;
     -webkit-clip-path: inherit;
-    filter: contrast(1.04) saturate(.98) brightness(.96);
+    filter: contrast(1.04) saturate(.98) brightness(.96) drop-shadow(0 0 15px rgba(255,107,181,0.15));
 }
 
 .hero-card,

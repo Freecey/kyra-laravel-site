@@ -10,12 +10,18 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => 'hello@imkyra.be'],
             [
                 'name'     => 'Kyra Admin',
                 'password' => Hash::make('change-me-in-production!'),
+                'role'     => 'admin',
             ]
         );
+
+        // Ensure existing user has admin role
+        if ($user->role !== 'admin') {
+            $user->update(['role' => 'admin']);
+        }
     }
 }

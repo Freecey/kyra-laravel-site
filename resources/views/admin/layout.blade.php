@@ -424,6 +424,13 @@
     <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
       <span class="icon">⚙</span> Paramètres
     </a>
+    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+      <span class="icon">◎</span> Utilisateurs
+    </a>
+    <div class="nav-section">Compte</div>
+    <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}">
+      <span class="icon">▷</span> Mon profil
+    </a>
     <a href="{{ route('home') }}" class="nav-link" target="_blank">
       <span class="icon">↗</span> Voir le site
     </a>

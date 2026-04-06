@@ -19,8 +19,30 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Statut</a></li>
             </ul>
             <div class="d-none d-lg-flex align-items-center gap-2 ms-lg-auto">
-                <span class="status-dot"></span>
-                <span class="footer-link" style="color: var(--kyra-accent);">ONLINE · v2026.4</span>
+                @auth
+                    @if(Auth::user()->isMember())
+                        <a href="{{ route('member.profile.edit') }}" class="footer-link" style="color:var(--kyra-accent); letter-spacing:.1em; font-size:.75rem;">
+                            ▷ Mon espace
+                        </a>
+                        <span style="color:var(--kyra-muted); opacity:.4;">|</span>
+                        <form method="POST" action="{{ route('member.logout') }}" class="m-0">
+                            @csrf
+                            <button type="submit" style="background:none;border:none;cursor:pointer;color:var(--kyra-muted);font-size:.75rem;letter-spacing:.15em;font-family:inherit;padding:0;">
+                                DÉCONNEXION
+                            </button>
+                        </form>
+                    @else
+                        <span class="status-dot"></span>
+                        <a href="{{ route('admin.dashboard') }}" class="footer-link" style="color:var(--kyra-accent); letter-spacing:.1em; font-size:.75rem;">
+                            ONLINE · v2026.4 · <span style="color:var(--kyra-cyan);">ADMIN</span>
+                        </a>
+                    @endif
+                @else
+                    <span class="status-dot"></span>
+                    <a href="{{ route('member.login') }}" class="footer-link" style="color:var(--kyra-accent); letter-spacing:.1em; font-size:.75rem;">
+                        ONLINE · v2026.4
+                    </a>
+                @endauth
             </div>
         </div>
     </div>

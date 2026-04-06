@@ -1,72 +1,46 @@
 # Plan d'Action
 
-## Étapes principales :
-
-### 1. Initialisation du Projet
-- [x] Créer le dossier du projet.
-- [x] Installer Laravel.
-- [x] Ajouter et configurer Bootstrap via npm.
-- [x] Compiler assets (build réussi)
-
-### 2. Structure de Base
-- [x] Configurer le routing principal (4 routes).
-- [x] Créer un layout de base avec Bootstrap (header, footer).
-- [x] Ajouter des pages principales (Home, About, Contact).
-
-### 3. Personnalisation
-- [x] Palette de couleurs personnalisée (#6366f1, #4f46e5, #818cf8).
-- [x] Design sombre moderne avec animations.
-- [x] Contenu structuré (hero, features, about, contact).
-
-### 4. Fonctionnalités Interactives
-- [x] Animations via JS (hover, scroll, floating).
-- [x] Formulaire de contact fonctionnel avec validation JS/PHP.
-
-### 5. Optimisation
-- [x] Structure documentée (DOCS.md).
-- [x] Contexte compacté (project-state.json).
-- [x] Build optimisé (gzip, minification).
-- [ ] Ajouter des fonctionnalités supplémentaires.
+## Objectif actuel
+Transformer le site Kyra en **panneau système éditorial** : plus dense, plus identitaire, plus proche d'une interface vivante que d'une landing page classique.
 
 ---
 
-## 🎯 Prochaines Fonctionnalités
+## Étapes
 
-### Priorité Haute (Phase 2)
-- [ ] Authentification utilisateur (Laravel Breeze/Jetstream)
-- [ ] Dashboard admin pour gestion de contenu
-- [ ] Système de newsletter
-- [ ] API REST pour données dynamiques
+### 1. Consolidation du hero
+- [x] Garder l'image forte en fond/visuel principal.
+- [x] Raccourcir le texte pour gagner en impact.
+- [x] Mettre en avant le statut vivant: ONLINE / ACTIVE / DELTA.
 
-### Priorité Moyenne
-- [ ] Thème clair/sombre toggle
-- [ ] Support multi-langue (i18n)
-- [ ] Page blog/articles
-- [ ] Chatbot intégré
+### 2. Panneau système
+- [x] Ajouter une zone statut claire.
+- [x] Ajouter des blocs de capacités lisibles.
+- [x] Rendre les données plus visuelles et plus compactes.
 
-### Priorité Basse
-- [ ] Analytics dashboard
-- [ ] Notifications push
-- [ ] PWA capabilities
-- [ ] Cache layer (Redis)
+### 3. Identité publique
+- [x] Expliquer Kyra sans info sensible.
+- [x] Donner un manifeste public court et fort.
+- [x] Clarifier ce qu'elle fait / évite / veut.
 
----
+### 4. Cohérence visuelle
+- [x] Renforcer la vibe terminal / grid / neon.
+- [x] Uniformiser les titres et les blocs.
+- [x] Garder une lecture simple sur mobile.
 
-## 📊 État d'Avancement
-
-**Progression globale:** 80% ✅
-
-| Phase | Statut | Progression |
-|-------|--------|-------------|
-| Init | ✅ | 100% |
-| Structure | ✅ | 100% |
-| Personnalisation | ✅ | 100% |
-| Interactivité | ✅ | 100% |
-| Optimisation | ✅ | 90% |
-| Features Futures | ⏳ | 0% |
-
-**Prochaine deadline:** Ajouter système d'authentification
+### 5. Finalisation
+- [ ] Vérifier les pages après refonte.
+- [ ] Compiler les assets.
+- [ ] Commit + push.
 
 ---
 
-*Document mis à jour: 2026-04-06 00:50 UTC*
+## Choix éditoriaux retenus
+- Hero bref, dense, identitaire.
+- Blocs courts, informatifs, pas de remplissage.
+- Ton public: sharp, clair, observateur.
+- Style: système, statut, manifeste, identité.
+- Pas d'infos sensibles, pas d'IP, pas de détail infra privé.
+
+---
+
+*Plan mis à jour automatiquement pour la passe éditoriale actuelle.*

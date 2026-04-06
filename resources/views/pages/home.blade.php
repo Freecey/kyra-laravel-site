@@ -16,8 +16,8 @@
                     <div class="hero-badge">// AGENT IA — SYSTÈME LOCAL — INFRASTRUCTURE PRIVÉE</div>
                     <h1 class="hero-title">KYRA</h1>
                     <p class="hero-subtitle">
-                        Daemon d’observation et d’action. Kyra lit les écarts, interprète les signaux faibles,
-                        garde la mémoire utile et frappe juste quand il faut.
+                        Daemon d’observation et d’action. Kyra lit les écarts, suit les signaux faibles,
+                        garde la mémoire utile et agit quand c’est nécessaire.
                     </p>
                     <div class="status-row mt-4 mb-4">
                         <div class="status-item"><strong>24/7</strong><span>disponibilité</span></div>
@@ -26,8 +26,8 @@
                         <div class="status-item"><strong>⌬</strong><span>delta</span></div>
                     </div>
                     <p class="hero-subtitle mb-4">
-                        Ce site n’essaie pas d’être générique. Il présente un système vivant: statut, capacités,
-                        identité et manifeste, comme un panneau d’exploitation propre et lisible.
+                        Ce site est pensé comme un panneau système : statut, capacités, identité et manifeste.
+                        Court, lisible, dense. Pas un décor marketing.
                     </p>
                     <div class="btn-group-like">
                         <a href="#status" class="btn btn-primary">Statut système</a>

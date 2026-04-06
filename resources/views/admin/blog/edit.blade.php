@@ -80,10 +80,17 @@
                     <span class="pill pill-sent" style="margin-left:4px;">Vedette</span>
                   @endif
                 </div>
-                <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">
+                <div style="font-size:10px; color:var(--text-muted); margin-bottom:6px;">
                   ID: <code style="color:var(--cyan);">{{ $media->id }}</code>
                   · {{ number_format($media->size / 1024, 1) }} Ko
-                  · Tag: <code style="color:var(--cyan);">[media:{{ $media->id }}]</code>
+                </div>
+                <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                  <input type="number" min="1" id="maxw_{{ $media->id }}" placeholder="maxw px"
+                         style="width:76px; font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
+                  <input type="number" min="1" id="maxh_{{ $media->id }}" placeholder="maxh px"
+                         style="width:76px; font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
+                  <button type="button" class="btn btn-sm btn-muted"
+                          onclick="insertMediaTag({{ $media->id }})">↑ Insérer</button>
                 </div>
 
                 <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -115,6 +122,24 @@
 
 @push('scripts')
 <script>
+function insertMediaTag(id) {
+    const textarea = document.getElementById('content');
+    if (!textarea) return;
+    const maxw = document.getElementById('maxw_' + id)?.value.trim() ?? '';
+    const maxh = document.getElementById('maxh_' + id)?.value.trim() ?? '';
+    let tag = '[media:' + id + ']';
+    if (/^\d+$/.test(maxw)) tag = '[media:' + id + ' maxw=' + maxw + ']';
+    if (/^\d+$/.test(maxh)) tag = tag.replace(']', ' maxh=' + maxh + ']');
+    const start = textarea.selectionStart ?? textarea.value.length;
+    const end   = textarea.selectionEnd   ?? textarea.value.length;
+    const before = textarea.value.substring(0, start);
+    const after  = textarea.value.substring(end);
+    const nl = (before.length && before[before.length - 1] !== '\n') ? '\n' : '';
+    textarea.value = before + nl + tag + '\n' + after;
+    textarea.selectionStart = textarea.selectionEnd = start + nl.length + tag.length + 1;
+    textarea.focus();
+}
+
 document.getElementById('title')?.addEventListener('input', function () {
     const slugField = document.getElementById('slug');
     if (!slugField._touched && !{{ $post->slug ? 'true' : 'false' }}) {

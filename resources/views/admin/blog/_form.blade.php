@@ -32,7 +32,10 @@
     <div class="form-group">
       <label class="form-label" for="content">Contenu *</label>
       <p class="form-hint" style="margin-bottom:6px;">
-        Supports HTML. Pour insérer un média associé : <code style="color:var(--cyan);">[media:ID]</code>
+        Supports HTML &amp; Markdown. Insérer un média : <code style="color:var(--cyan);">[media:ID]</code>
+        · avec dimensions : <code style="color:var(--cyan);">[media:ID maxw=600]</code>
+        · <code style="color:var(--cyan);">[media:ID maxh=400]</code>
+        · <code style="color:var(--cyan);">[media:ID maxw=600 maxh=400]</code>
       </p>
       <textarea id="content" name="content" rows="20"
                 class="form-control @error('content') is-invalid @enderror"

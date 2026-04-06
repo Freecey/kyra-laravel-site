@@ -64,8 +64,8 @@ class BlogPost extends Model
     {
         $mediaMap = $this->media->keyBy('id');
 
-        // 1. Substitute [media:ID] shortcodes with img tags
-        $html = preg_replace_callback('/\[media:(\d+)\]/', function (array $matches) use ($mediaMap) {
+        // 1. Substitute [media:ID] or [media:ID maxw=N maxh=N] shortcodes with img tags
+        $html = preg_replace_callback('/\[media:(\d+)((?:\s+[a-zA-Z]\w*=\d+)*)\]/', function (array $matches) use ($mediaMap) {
             $id = (int) $matches[1];
             /** @var PostMedia|null $item */
             $item = $mediaMap->get($id);
@@ -74,12 +74,21 @@ class BlogPost extends Model
             }
             $url = e($item->getUrl());
             $alt = e($item->alt ?? $item->filename);
-            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" class="blog-media">';
+            $opts = $matches[2] ?? '';
+            $style = '';
+            if (preg_match('/\bmaxw=(\d+)\b/', $opts, $m)) {
+                $style .= 'max-width:' . (int) $m[1] . 'px;';
+            }
+            if (preg_match('/\bmaxh=(\d+)\b/', $opts, $m)) {
+                $style .= 'max-height:' . (int) $m[1] . 'px;';
+            }
+            $styleAttr = $style ? ' style="' . $style . '"' : '';
+            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" class="blog-media"' . $styleAttr . '>';
         }, $this->content ?? '');
 
-        // 2. Convert Markdown to HTML
+        // 2. Convert Markdown to HTML (html_input:allow preserves <img> tags from shortcode above)
         $converter = new \League\CommonMark\CommonMarkConverter([
-            'html_input'         => 'strip',
+            'html_input'         => 'allow',
             'allow_unsafe_links' => false,
         ]);
 

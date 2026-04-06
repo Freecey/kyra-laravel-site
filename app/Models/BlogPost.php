@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class BlogPost extends Model
@@ -54,30 +53,36 @@ class BlogPost extends Model
 
     public function getFeaturedImageUrl(): ?string
     {
-        if ($this->featuredMedia) {
-            return Storage::disk('public')->url($this->featuredMedia->path);
-        }
-        return null;
+        return $this->featuredMedia?->getUrl();
     }
 
     /**
-     * Replace [media:ID] tags in content with <img> HTML.
+     * Replace [media:ID] tags in content with <img> HTML, then render Markdown.
      */
     public function renderContent(): string
     {
         $mediaMap = $this->media->keyBy('id');
 
-        return preg_replace_callback('/\[media:(\d+)\]/', function (array $matches) use ($mediaMap) {
+        // 1. Substitute [media:ID] shortcodes with img tags
+        $html = preg_replace_callback('/\[media:(\d+)\]/', function (array $matches) use ($mediaMap) {
             $id = (int) $matches[1];
             /** @var PostMedia|null $item */
             $item = $mediaMap->get($id);
             if (!$item) {
                 return '';
             }
-            $url = Storage::disk('public')->url($item->path);
+            $url = e($item->getUrl());
             $alt = e($item->alt ?? $item->filename);
-            return '<img src="' . e($url) . '" alt="' . $alt . '" loading="lazy" class="blog-media">';
+            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" class="blog-media">';
         }, $this->content ?? '');
+
+        // 2. Convert Markdown to HTML
+        $converter = new \League\CommonMark\CommonMarkConverter([
+            'html_input'         => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+
+        return $converter->convert($html)->getContent();
     }
 
     /**

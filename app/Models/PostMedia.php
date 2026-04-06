@@ -29,6 +29,12 @@ class PostMedia extends Model
 
     public function getUrl(): string
     {
+        if ($this->disk === 'public') {
+            // url() uses the actual request host (https://imkyra.be) instead of
+            // APP_URL from .env, which avoids mixed-content errors on production.
+            return url('storage/' . $this->path);
+        }
+
         return Storage::disk($this->disk)->url($this->path);
     }
 

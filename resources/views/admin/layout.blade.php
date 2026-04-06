@@ -439,6 +439,10 @@
     <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
       <span class="icon">◎</span> Utilisateurs
     </a>
+    <div class="nav-section">Documentation</div>
+    <a href="{{ route('admin.doc.api') }}" class="nav-link {{ request()->routeIs('admin.doc.*') ? 'active' : '' }}">
+      <span class="icon">◎</span> API
+    </a>
     <div class="nav-section">Compte</div>
     <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}">
       <span class="icon">▷</span> Mon profil
@@ -477,5 +481,6 @@
     @yield('content')
   </div>
 </div>
+@stack('scripts')
 </body>
 </html>

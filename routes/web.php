@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatsController;
 use App\Http\Controllers\Admin\ToolboxController;
 use App\Http\Controllers\Admin\LogController;
+use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Member\ProfileController as MemberProfileController;
 use App\Http\Controllers\BlogController;
@@ -121,6 +122,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [LogController::class, 'index']);
             Route::post('/clear', [LogController::class, 'clear'])->name('.clear');
             Route::get('/download', [LogController::class, 'download'])->name('.download');
+        });
+
+        Route::prefix('doc')->name('doc.')->group(function () {
+            Route::get('/api', [DocController::class, 'api'])->name('api');
         });
     });
 });

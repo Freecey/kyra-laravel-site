@@ -28,25 +28,30 @@
 # CACHE — Durées longues pour les assets statiques
 # ═══════════════════════════════════════════════════
 
-<IfModule mod_expires.c>
-    ExpiresActive On
-
-    # Assets Vite (fichiers avec hash dans le nom — /build/)
+# Fallback mod_headers seul (sans mod_expires)
+<IfModule mod_headers.c>
     <FilesMatch "\.(css|js)$">
-        ExpiresDefault "access plus 1 year"
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
-
-    # Images
     <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico)$">
-        ExpiresDefault "access plus 30 days"
         Header set Cache-Control "public, max-age=2592000"
     </FilesMatch>
+    <FilesMatch "\.(woff2|woff|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
 
-    # Polices
+# mod_expires (plus précis, remplace mod_headers si disponible)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    <FilesMatch "\.(css|js)$">
+        ExpiresDefault "access plus 1 year"
+    </FilesMatch>
+    <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico)$">
+        ExpiresDefault "access plus 30 days"
+    </FilesMatch>
     <FilesMatch "\.(woff2|woff|ttf|otf|eot)$">
         ExpiresDefault "access plus 1 year"
-        Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 </IfModule>
 

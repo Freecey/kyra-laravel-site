@@ -424,6 +424,12 @@
       <span class="icon">◈</span> Statistiques
     </a>
     <div class="nav-section">Administration</div>
+    <a href="{{ route('admin.toolbox') }}" class="nav-link {{ request()->routeIs('admin.toolbox*') ? 'active' : '' }}">
+      <span class="icon">⚒</span> Boîte à outils
+    </a>
+    <a href="{{ route('admin.logs') }}" class="nav-link {{ request()->routeIs('admin.logs*') ? 'active' : '' }}">
+      <span class="icon">▤</span> Journaux
+    </a>
     <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
       <span class="icon">⚙</span> Paramètres
     </a>

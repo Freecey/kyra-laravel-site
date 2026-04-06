@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatsController;
+use App\Http\Controllers\Admin\ToolboxController;
+use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Member\ProfileController as MemberProfileController;
 
@@ -76,6 +78,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         Route::get('/stats', [StatsController::class, 'index'])->name('stats');
+
+        Route::prefix('toolbox')->name('toolbox')->group(function () {
+            Route::get('/', [ToolboxController::class, 'index']);
+            Route::post('/send-email', [ToolboxController::class, 'sendEmail'])->name('.send-email');
+            Route::post('/artisan', [ToolboxController::class, 'runArtisan'])->name('.artisan');
+            Route::get('/error/{code}', [ToolboxController::class, 'triggerError'])->name('.error')->whereNumber('code');
+        });
+
+        Route::prefix('logs')->name('logs')->group(function () {
+            Route::get('/', [LogController::class, 'index']);
+            Route::post('/clear', [LogController::class, 'clear'])->name('.clear');
+            Route::get('/download', [LogController::class, 'download'])->name('.download');
+        });
     });
 });
 

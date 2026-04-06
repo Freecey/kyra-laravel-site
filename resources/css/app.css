@@ -229,13 +229,16 @@ main {
     margin: 0 auto;
     padding: 12px;
     background: rgba(2, 6, 10, 0.96);
-    border: 1px solid rgba(255, 107, 181, 0.88);
+    border: 2px solid rgba(25, 216, 255, 0.92);
     clip-path: var(--hex);
     -webkit-clip-path: var(--hex);
+    overflow: hidden;
     box-shadow:
-        0 0 0 1px rgba(0,0,0,.86),
-        0 0 26px rgba(255, 107, 181, 0.12),
-        0 0 0 1px rgba(25, 216, 255, 0.08) inset;
+        0 0 0 1px rgba(0,0,0,.90),
+        0 0 0 1px rgba(25, 216, 255, 0.14) inset,
+        0 0 0 6px rgba(255, 107, 181, 0.10) inset,
+        0 0 28px rgba(25, 216, 255, 0.12),
+        0 0 26px rgba(255, 107, 181, 0.10);
     position: relative;
 }
 
@@ -250,18 +253,18 @@ main {
 }
 
 .hero-avatar::before {
-    border: 1px solid rgba(25, 216, 255, 0.18);
-    inset: 6px;
-    opacity: .65;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    inset: 8px;
+    opacity: .70;
 }
 
 .hero-avatar::after {
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(25,216,255,0.10), transparent 22%, transparent 78%, rgba(255,107,181,0.08)),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.00) 30%, rgba(255,255,255,0.00) 70%, rgba(255,255,255,0.03) 100%);
+        linear-gradient(180deg, rgba(25,216,255,0.12), transparent 20%, transparent 80%, rgba(255,107,181,0.08)),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.00) 28%, rgba(255,255,255,0.00) 72%, rgba(255,255,255,0.04) 100%);
     mix-blend-mode: screen;
-    opacity: .42;
+    opacity: .48;
 }
 
 .hero-avatar img {

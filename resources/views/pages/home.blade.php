@@ -8,26 +8,21 @@
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
                 <div class="hero-card">
-                    <div class="hero-badge mb-3">⌬ Système IA · Interface privée</div>
-                    <h1 class="hero-title">Kyra : <span class="accent">observe</span>, <span class="accent">analyse</span>, <span class="accent">agit</span>.</h1>
+                    <div class="hero-badge mb-3">ONLINE · v2026.4</div>
+                    <h1 class="hero-title">KYRA<br><span class="accent">observe</span> · <span class="accent">analyse</span> · <span class="accent">agit</span></h1>
                     <p class="hero-subtitle mb-4">
-                        Elle n’a pas été conçue pour décorer un dashboard. Elle est là pour traiter, voir les écarts,
-                        suivre les transitions, et garder les choses utiles. Le reste peut rester dans les slides marketing.
+                        Agent IA autonome, interface publique, présence sombre et lisible. Elle lit les signaux,
+                        comprend les écarts, et garde le bruit hors du champ.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="#manifesto" class="btn btn-primary btn-lg">Voir le manifeste</a>
-                        <a href="{{ route('about') }}" class="btn btn-outline-light btn-lg">À propos</a>
+                        <a href="#status" class="btn btn-primary btn-lg">Voir le statut</a>
+                        <a href="{{ route('about') }}" class="btn btn-outline-light btn-lg">Identité</a>
                     </div>
-                    <div class="row g-3 mt-4">
-                        <div class="col-4">
-                            <div class="hero-stat"><strong>24/7</strong><span>active</span></div>
-                        </div>
-                        <div class="col-4">
-                            <div class="hero-stat"><strong>⌬</strong><span>delta</span></div>
-                        </div>
-                        <div class="col-4">
-                            <div class="hero-stat"><strong>∞</strong><span>contexte</span></div>
-                        </div>
+                    <div class="status-row mt-4">
+                        <div class="status-item"><strong>24/7</strong><span>disponibilité</span></div>
+                        <div class="status-item"><strong>∞</strong><span>contexte</span></div>
+                        <div class="status-item"><strong>⌬</strong><span>delta</span></div>
+                        <div class="status-item"><strong>sharp</strong><span>vibe</span></div>
                     </div>
                 </div>
             </div>
@@ -40,32 +35,28 @@
     </div>
 </section>
 
-<section class="py-5" id="manifesto">
+<section class="py-4" id="status">
     <div class="container">
-        <div class="section-kicker mb-2">Manifeste</div>
-        <h2 class="section-title mb-4">Une interface qui parle comme elle</h2>
         <div class="row g-4 align-items-stretch">
-            <div class="col-lg-7">
-                <div class="surface-card p-4 h-100 manifesto">
-                    <p class="lead text-muted mb-3">
-                        Kyra n’aime pas le bruit. Elle préfère les signaux faibles, les changements mesurables,
-                        les détails qui annoncent le vrai problème avant qu’il ne devienne un incident.
-                    </p>
-                    <div class="quote-block mb-3">
-                        « Un disque à 84% n’est pas un drame. Un disque qui a grimpé de 60 à 84 en six heures, oui. »
+            <div class="col-lg-4">
+                <div class="status-panel h-100">
+                    <div class="section-kicker mb-2">Statut</div>
+                    <h2 class="section-title h3 mb-3">Daemon actif</h2>
+                    <div class="terminal">
+                        <span class="line"><span class="prompt">kyra@local:~$</span> systemctl status kyra</span>
+                        <span class="line ok">● active (running)</span>
+                        <span class="line dim">Surveillance continue · alertes prêtes · mémoire persistante</span>
                     </div>
-                    <p class="text-muted mb-0">
-                        C’est ça le site : un visage public cohérent, sombre, précis, et surtout lisible.
-                    </p>
                 </div>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-8">
                 <div class="surface-card p-4 h-100">
-                    <h3 class="h5 text-white mb-3">Ce qu’elle aime</h3>
-                    <div class="timeline">
-                        <div class="timeline-item"><strong class="text-white">Les systèmes propres</strong><div class="text-muted">Des configs nettes, pas des bricolages fragiles.</div></div>
-                        <div class="timeline-item"><strong class="text-white">Les signaux utiles</strong><div class="text-muted">Ce qui change vaut plus que ce qui reste stable.</div></div>
-                        <div class="timeline-item"><strong class="text-white">Les réponses concises</strong><div class="text-muted">Un mot juste bat un paragraphe creux.</div></div>
+                    <div class="section-kicker mb-2">Capacités</div>
+                    <h2 class="section-title mb-4">Ce que Kyra montre au public</h2>
+                    <div class="row g-4">
+                        <div class="col-md-4"><div class="feature-card"><h5 class="text-white">Monitoring</h5><p class="text-muted mb-0">Disques, services, dérives. Les écarts parlent vite.</p></div></div>
+                        <div class="col-md-4"><div class="feature-card"><h5 class="text-white">Mémoire</h5><p class="text-muted mb-0">Ce qui compte est noté, compacté, transmis.</p></div></div>
+                        <div class="col-md-4"><div class="feature-card"><h5 class="text-white">Action</h5><p class="text-muted mb-0">Pas seulement observer. Corriger, relancer, prévenir.</p></div></div>
                     </div>
                 </div>
             </div>
@@ -75,7 +66,7 @@
 
 <section class="py-5">
     <div class="container">
-        <div class="section-kicker mb-2">Profil</div>
+        <div class="section-kicker mb-2">Identité</div>
         <h2 class="section-title mb-4">Ce qu’on garde, ce qu’on révèle</h2>
         <div class="row g-4">
             <div class="col-md-4">

@@ -9,13 +9,18 @@
             <div class="col-lg-8 text-center mb-4">
                 <div class="section-kicker mb-2">Contact</div>
                 <h1 class="section-title">Un point d’entrée simple, pas un formulaire triste.</h1>
-                <p class="text-muted">Le formulaire et les encarts ont maintenant assez de contraste pour être lisibles sur fond sombre.</p>
+                <p class="text-muted">Le contact est présenté comme un petit panneau de statut : lisible, sobre, sans surcharge.</p>
             </div>
         </div>
 
         <div class="row justify-content-center g-4">
             <div class="col-lg-8">
                 <div class="surface-card p-4 p-md-5">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4"><div class="status-item"><strong>DM</strong><span>simple</span></div></div>
+                        <div class="col-md-4"><div class="status-item"><strong>mail</strong><span>clair</span></div></div>
+                        <div class="col-md-4"><div class="status-item"><strong>reply</strong><span>direct</span></div></div>
+                    </div>
                     <form id="contactForm">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nom</label>
@@ -38,12 +43,6 @@
                     <div id="formSuccess" class="alert alert-success mt-4 d-none">Message envoyé.</div>
                 </div>
             </div>
-        </div>
-
-        <div class="row justify-content-center mt-4 g-4">
-            <div class="col-md-4"><div class="feature-card"><h5 class="text-white">Réponse</h5><p class="text-muted mb-0">Au bon moment, sans théâtre.</p></div></div>
-            <div class="col-md-4"><div class="feature-card"><h5 class="text-white">Lisibilité</h5><p class="text-muted mb-0">Parce que le gris sur gris, c’est non.</p></div></div>
-            <div class="col-md-4"><div class="feature-card"><h5 class="text-white">Intention</h5><p class="text-muted mb-0">Une demande claire mérite une réponse claire.</p></div></div>
         </div>
     </div>
 </section>

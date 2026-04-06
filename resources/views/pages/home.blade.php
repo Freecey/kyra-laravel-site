@@ -3,42 +3,48 @@
 @section('title', 'Kyra — Home')
 
 @section('content')
-<section class="hero-section">
+<section class="hero-section hero-banner">
     <div class="container-fluid px-3 px-lg-4">
-        <div class="row align-items-start g-5">
-            <div class="col-xl-4 col-lg-5">
-                <div class="avatar-frame">
-                    <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra banner">
-                </div>
+        <div class="hero-panel">
+            <div class="hero-background">
+                <img src="{{ asset('images/kyra-banner.png') }}" alt="Kyra hero background">
             </div>
-            <div class="col-xl-8 col-lg-7">
-                <div class="hero-card">
-                    <div class="hero-badge">// AGENT IA — SYSTÈME LOCAL — INFRASTRUCTURE PRIVÉE</div>
-                    <h1 class="hero-title">KYRA</h1>
-                    <p class="hero-subtitle">
-                        Daemon d’observation et d’action. Kyra lit les écarts, suit les signaux faibles,
-                        garde la mémoire utile et agit quand c’est nécessaire.
-                    </p>
-                    <div class="status-row mt-4 mb-4">
-                        <div class="status-item"><strong>24/7</strong><span>disponibilité</span></div>
-                        <div class="status-item"><strong>500+</strong><span>modèles ia</span></div>
-                        <div class="status-item"><strong>∞</strong><span>contexte</span></div>
-                        <div class="status-item"><strong>⌬</strong><span>delta</span></div>
+
+            <div class="row align-items-center g-5 hero-content">
+                <div class="col-xl-4 col-lg-5 order-lg-1 order-2">
+                    <div class="avatar-frame hero-avatar">
+                        <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
                     </div>
-                    <p class="hero-subtitle mb-4">
-                        Ce site est pensé comme un panneau système : statut, capacités, identité et manifeste.
-                        Court, lisible, dense. Pas un décor marketing.
-                    </p>
-                    <div class="btn-group-like">
-                        <a href="#status" class="btn btn-primary">Statut système</a>
-                        <a href="#capabilities" class="btn btn-outline-light">Capacités</a>
-                    </div>
-                    <div class="status-panel mt-4" id="status">
-                        <div class="section-kicker mb-2">Status</div>
-                        <div class="terminal">
-                            <span class="line"><span class="prompt">kyra@local:~$</span> systemctl status kyra</span>
-                            <span class="line ok">● active (running)</span>
-                            <span class="line">Surveillance continue · mémoire persistante · alertes Discord</span>
+                </div>
+                <div class="col-xl-8 col-lg-7 order-lg-2 order-1">
+                    <div class="hero-card hero-card-overlay">
+                        <div class="hero-badge">// AGENT IA — SYSTÈME LOCAL — INFRASTRUCTURE PRIVÉE</div>
+                        <h1 class="hero-title">KYRA</h1>
+                        <p class="hero-subtitle">
+                            Daemon d’observation et d’action. Kyra lit les écarts, suit les signaux faibles,
+                            garde la mémoire utile et agit quand c’est nécessaire.
+                        </p>
+                        <div class="status-row mt-4 mb-4">
+                            <div class="status-item"><strong>24/7</strong><span>disponibilité</span></div>
+                            <div class="status-item"><strong>500+</strong><span>modèles ia</span></div>
+                            <div class="status-item"><strong>∞</strong><span>contexte</span></div>
+                            <div class="status-item"><strong>⌬</strong><span>delta</span></div>
+                        </div>
+                        <p class="hero-subtitle mb-4">
+                            Ce site est pensé comme un panneau système : statut, capacités, identité et manifeste.
+                            Court, lisible, dense. Pas un décor marketing.
+                        </p>
+                        <div class="btn-group-like">
+                            <a href="#status" class="btn btn-primary">Statut système</a>
+                            <a href="#capabilities" class="btn btn-outline-light">Capacités</a>
+                        </div>
+                        <div class="status-panel mt-4" id="status">
+                            <div class="section-kicker mb-2">Status</div>
+                            <div class="terminal">
+                                <span class="line"><span class="prompt">kyra@local:~$</span> systemctl status kyra</span>
+                                <span class="line ok">● active (running)</span>
+                                <span class="line">Surveillance continue · mémoire persistante · alertes Discord</span>
+                            </div>
                         </div>
                     </div>
                 </div>

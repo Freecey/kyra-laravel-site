@@ -177,6 +177,57 @@ main {
     padding: 2rem 0 4rem;
 }
 
+.hero-banner {
+    position: relative;
+}
+
+.hero-panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(25, 216, 255, 0.14);
+    background: linear-gradient(180deg, rgba(5, 12, 18, .86), rgba(6, 13, 20, .78));
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: .18;
+    pointer-events: none;
+}
+
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(.9) contrast(1.05) brightness(.85);
+}
+
+.hero-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(4,8,13,.95) 0%, rgba(4,8,13,.74) 40%, rgba(4,8,13,.82) 100%),
+        linear-gradient(180deg, rgba(4,8,13,.20), rgba(4,8,13,.60));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 1.5rem;
+}
+
+.hero-card-overlay {
+    background: rgba(3, 8, 13, 0.52);
+    backdrop-filter: blur(2px);
+}
+
+.hero-avatar {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
 .hero-card,
 .feature-card,
 .surface-card,

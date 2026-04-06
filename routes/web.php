@@ -15,6 +15,10 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+Route::get('/signal', function () {
+    return view('pages.signal');
+})->name('signal');
+
 Route::post('/contact', function (Request $request) {
     $validated = $request->validate([
         'name' => 'required|string|max:255',

@@ -142,7 +142,7 @@
 @section('content')
 
 <div class="info-box">
-  <strong>URL de base :</strong> <code>{{ config('app.url') }}/api/v1</code><br>
+  <strong>URL de base :</strong> <code>{{ url('/api/v1') }}</code><br>
   <strong>Authentification :</strong> Bearer token (Sanctum) — <code>Authorization: Bearer {token}</code><br>
   <strong>Format :</strong> JSON — <code>Accept: application/json</code>
 </div>
@@ -400,7 +400,7 @@ You have access to the Kyra blog REST API. Always send:
   Accept: application/json
   Content-Type: application/json  (for POST/PUT)
 
-Base URL: {{ config('app.url') }}/api/v1
+Base URL: {{ url('/api/v1') }}
 
 ---
 

@@ -31,8 +31,7 @@ class SettingController extends Controller
             'settings.notification_subject'              => 'required|string|max:255',
             'settings.form_success_message'              => 'required|string|max:500',
             'settings.member_registration_disabled_message' => 'nullable|string|max:500',
-            'settings.member_registration_approval'      => 'nullable|in:auto,email,admin',
-        ]);
+            'settings.member_registration_approval'      => 'nullable|in:auto,email,admin',            'settings.maintenance_message'                   => 'nullable|string|max:500',        ]);
 
         $data = $request->input('settings');
 
@@ -40,6 +39,7 @@ class SettingController extends Controller
         $data['form_enabled']                    = isset($data['form_enabled'])                    ? '1' : '0';
         $data['mail_verify_ssl']                 = isset($data['mail_verify_ssl'])                 ? '1' : '0';
         $data['member_registration_enabled']     = isset($data['member_registration_enabled'])     ? '1' : '0';
+        $data['maintenance_enabled']             = isset($data['maintenance_enabled'])             ? '1' : '0';
 
         foreach ($data as $key => $value) {
             // Never overwrite password with empty string — keep existing value

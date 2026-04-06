@@ -230,6 +230,44 @@
     </div>
   </div>
 
+  {{-- MODE MAINTENANCE --}}
+  <div class="card" style="border-color: rgba(255, 51, 102, 0.3);">
+    <div class="card-header" style="border-bottom-color: rgba(255, 51, 102, 0.2);">
+      <h2 style="color: var(--pink, #ff3366);">&#x26A0; Mode maintenance</h2>
+    </div>
+    <div class="card-body">
+      @php
+        $maintenanceEnabled = $settings['maintenance_enabled'] ?? null;
+        $maintenanceMessage = $settings['maintenance_message'] ?? null;
+      @endphp
+
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" id="maintenance_enabled" name="settings[maintenance_enabled]" value="1"
+                 {{ old('settings.maintenance_enabled', $maintenanceEnabled?->value ?? '0') == '1' ? 'checked' : '' }}>
+          <label for="maintenance_enabled" style="font-weight:600;">Activer le mode maintenance</label>
+        </div>
+        <p class="form-hint" style="margin-top:8px;">
+          Si activé, tous les visiteurs verront la page de maintenance (code 503).
+          <strong>Les pages admin restent accessibles.</strong>
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="maintenance_message">Message affiché aux visiteurs</label>
+        <textarea id="maintenance_message" name="settings[maintenance_message]"
+                  class="form-control" rows="3">{{ old('settings.maintenance_message', $maintenanceMessage?->value) }}</textarea>
+        <p class="form-hint" style="margin-top:6px;">Ce message apparaît dans le terminal de la page de maintenance.</p>
+      </div>
+
+      @if(($maintenanceEnabled?->value ?? '0') == '1')
+        <div style="background: rgba(255,51,102,0.08); border: 1px solid rgba(255,51,102,0.3); border-radius:4px; padding:12px 16px; font-size:13px; color:#ff3366;">
+          &#x26A0;&nbsp; <strong>Le mode maintenance est actuellement ACTIF.</strong> Les visiteurs ne peuvent pas accéder au site.
+        </div>
+      @endif
+    </div>
+  </div>
+
   <div style="text-align: right;">
     <button type="submit" class="btn btn-primary">Sauvegarder les paramètres</button>
   </div>

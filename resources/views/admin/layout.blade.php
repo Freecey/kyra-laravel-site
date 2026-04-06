@@ -454,6 +454,21 @@
       <span class="icon">↗</span> Voir le site
     </a>
   </nav>
+
+  {{-- Maintenance status --}}
+  @php $maintenanceOn = \App\Models\Setting::get('maintenance_enabled', false); @endphp
+  <a href="{{ route('admin.settings.index') }}" style="display:block; margin:0 12px 12px; padding:9px 12px; border-radius:3px; text-decoration:none; border:1px solid {{ $maintenanceOn ? 'rgba(255,51,102,.4)' : 'rgba(0,255,136,.25)' }}; background:{{ $maintenanceOn ? 'rgba(255,51,102,.07)' : 'rgba(0,255,136,.05)' }}; transition:opacity .15s;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:{{ $maintenanceOn ? '#ff3366' : '#00ff88' }};box-shadow:0 0 6px {{ $maintenanceOn ? '#ff3366' : '#00ff88' }};{{ $maintenanceOn ? 'animation:sidebar-blink 1.2s ease-in-out infinite;' : '' }}"></span>
+      <span style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:{{ $maintenanceOn ? '#ff3366' : '#00ff88' }}; font-family:\'Share Tech Mono\',monospace;">{{ $maintenanceOn ? 'Maintenance ON' : 'Site en ligne' }}</span>
+    </div>
+  </a>
+  @push('scripts')
+  @if($maintenanceOn)
+  <style>@keyframes sidebar-blink { 0%,100%{opacity:1} 50%{opacity:.25} }</style>
+  @endif
+  @endpush
+
   <div class="sidebar-footer">
     <form method="POST" action="{{ route('admin.logout') }}">
       @csrf

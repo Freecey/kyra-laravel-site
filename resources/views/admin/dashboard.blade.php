@@ -3,6 +3,27 @@
 @section('topbar-title', 'Dashboard')
 
 @section('content')
+@php $maintenanceActive = \App\Models\Setting::get('maintenance_enabled', false); @endphp
+@if($maintenanceActive)
+<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; background:rgba(255,51,102,.07); border:1px solid rgba(255,51,102,.35); border-left:3px solid #ff3366; border-radius:4px; padding:14px 18px; margin-bottom:24px;">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span style="width:9px;height:9px;border-radius:50%;background:#ff3366;box-shadow:0 0 8px #ff3366;animation:maint-blink 1.2s ease-in-out infinite;flex-shrink:0;"></span>
+    <span style="font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ff3366;">Mode maintenance actif</span>
+    <span style="font-size:12px;color:rgba(200,216,224,.55);">— Le site est inaccessible aux visiteurs</span>
+  </div>
+  <a href="{{ route('admin.settings.index') }}" class="btn btn-sm" style="border-color:rgba(255,51,102,.5);color:#ff3366;white-space:nowrap;">Désactiver →</a>
+</div>
+<style>@keyframes maint-blink{0%,100%{opacity:1}50%{opacity:.2}}</style>
+@else
+<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; background:rgba(0,255,136,.04); border:1px solid rgba(0,255,136,.2); border-left:3px solid #00ff88; border-radius:4px; padding:14px 18px; margin-bottom:24px;">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span style="width:9px;height:9px;border-radius:50%;background:#00ff88;box-shadow:0 0 8px #00ff88;flex-shrink:0;"></span>
+    <span style="font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#00ff88;">Site en ligne</span>
+    <span style="font-size:12px;color:rgba(200,216,224,.55);">— Accessible normalement aux visiteurs</span>
+  </div>
+  <a href="{{ route('admin.settings.index') }}" class="btn btn-sm btn-muted" style="white-space:nowrap;">Paramètres →</a>
+</div>
+@endif
 <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
   <div class="stat-card">
     <div class="stat-value">{{ $totalMessages }}</div>

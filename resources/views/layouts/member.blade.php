@@ -15,7 +15,7 @@
             <a class="navbar-brand" href="{{ route('home') }}">
                 <picture>
                     <source srcset="{{ asset('images/kyra.webp') }}" type="image/webp">
-                    <img src="{{ asset('images/kyra.png') }}" alt="Kyra" width="512" height="512">
+                    <img src="{{ asset('images/kyra.png') }}" alt="" width="512" height="512">
                 </picture>
                 <span>KY<span class="navbar-brand-accent">RA</span></span>
             </a>

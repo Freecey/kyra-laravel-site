@@ -3,7 +3,7 @@
         <div class="d-flex align-items-center gap-3">
             <picture>
                 <source srcset="{{ asset('images/kyra.webp') }}" type="image/webp">
-                <img src="{{ asset('images/kyra.png') }}" alt="Kyra" width="40" height="40"
+                <img src="{{ asset('images/kyra.png') }}" alt="" width="40" height="40"
                     class="rounded-0" style="border: 1px solid rgba(0,200,255,0.2);">
             </picture>
             <div>

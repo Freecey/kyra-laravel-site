@@ -1,0 +1,4 @@
+/* Custom Bootstrap overrides */
+:root {
+  --primary-color: #4c6ef5; /* New blue primary */
+}

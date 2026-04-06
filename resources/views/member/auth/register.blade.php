@@ -2,6 +2,11 @@
 @section('title', 'Créer un compte')
 
 @section('form')
+@if($disabled ?? false)
+  <div style="padding:20px; background:#0d1f2d; border:1px solid #1e3a4a; border-radius:6px; color:#e2e8f0; font-size:14px; line-height:1.6; text-align:center;">
+    {{ $disabledMessage }}
+  </div>
+@else
 <form method="POST" action="{{ route('member.register.post') }}">
     @csrf
 
@@ -43,6 +48,7 @@
 
     <button type="submit" class="btn btn-primary w-100">Créer mon compte</button>
 </form>
+@endif
 @endsection
 
 @section('footer-link')

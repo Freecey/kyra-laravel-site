@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\ContactMessage;
 use App\Models\MessageReply;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Facades\View;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -133,6 +134,47 @@ class MailService
             }
         }
 
+        $mail->send();
+    }
+
+    /**
+     * Send a verification email to a newly registered member.
+     */
+    public function sendEmailVerification(User $user, string $verifyUrl): void
+    {
+        $html = View::make('mail.member-email-verification', [
+            'user'      => $user,
+            'verifyUrl' => $verifyUrl,
+        ])->render();
+
+        $fromName = Setting::get('mail_from_name', 'KYRA');
+
+        $mail = $this->mailer();
+        $mail->addAddress($user->email, $user->name);
+        $mail->Subject = '[' . $fromName . '] Vérification de votre adresse email';
+        $mail->isHTML(true);
+        $mail->Body    = $html;
+        $mail->AltBody = strip_tags($html);
+        $mail->send();
+    }
+
+    /**
+     * Notify a member that their account has been approved by an admin.
+     */
+    public function sendMemberApproved(User $user): void
+    {
+        $html = View::make('mail.member-approved', [
+            'user' => $user,
+        ])->render();
+
+        $fromName = Setting::get('mail_from_name', 'KYRA');
+
+        $mail = $this->mailer();
+        $mail->addAddress($user->email, $user->name);
+        $mail->Subject = '[' . $fromName . '] Votre compte a été approuvé';
+        $mail->isHTML(true);
+        $mail->Body    = $html;
+        $mail->AltBody = strip_tags($html);
         $mail->send();
     }
 }

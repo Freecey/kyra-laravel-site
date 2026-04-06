@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password', 'role'])]
+#[Fillable(['name', 'email', 'password', 'role', 'status', 'email_verification_token'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -39,5 +39,10 @@ class User extends Authenticatable
     public function isMember(): bool
     {
         return $this->role === 'member';
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
     }
 }

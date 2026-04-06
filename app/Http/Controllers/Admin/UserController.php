@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\MailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,6 +37,7 @@ class UserController extends Controller
             'email'    => $validated['email'],
             'role'     => $validated['role'],
             'password' => Hash::make($validated['password']),
+            'status'   => 'active',
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé.');
@@ -83,5 +85,24 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur supprimé.');
+    }
+
+    public function approve(User $user)
+    {
+        if ($user->status !== 'pending') {
+            return back()->with('error', 'Ce compte n\'est pas en attente d\'approbation.');
+        }
+
+        $user->status                   = 'active';
+        $user->email_verification_token = null;
+        $user->save();
+
+        try {
+            app(MailService::class)->sendMemberApproved($user);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Member approval email failed: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.users.index')->with('success', 'Compte de ' . $user->name . ' approuvé. Un email lui a été envoyé.');
     }
 }

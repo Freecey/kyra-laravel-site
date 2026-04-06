@@ -170,6 +170,66 @@
     </div>
   </div>
 
+  {{-- INSCRIPTIONS MEMBRES --}}
+  <div class="card">
+    <div class="card-header">
+      <h2>&#x2699; Inscriptions membres</h2>
+    </div>
+    <div class="card-body">
+      @php
+        $regEnabled  = $settings['member_registration_enabled'] ?? null;
+        $regMessage  = $settings['member_registration_disabled_message'] ?? null;
+        $regApproval = $settings['member_registration_approval'] ?? null;
+      @endphp
+
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" id="member_registration_enabled" name="settings[member_registration_enabled]" value="1"
+                 {{ old('settings.member_registration_enabled', $regEnabled?->value ?? '1') == '1' ? 'checked' : '' }}>
+          <label for="member_registration_enabled">Activer les inscriptions membres</label>
+        </div>
+        <p class="form-hint" style="margin-top:6px;">Si désactivé, le formulaire d'inscription est remplacé par un message.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="member_registration_disabled_message">Message affiché si inscriptions désactivées</label>
+        <textarea id="member_registration_disabled_message" name="settings[member_registration_disabled_message]"
+                  class="form-control" rows="3">{{ old('settings.member_registration_disabled_message', $regMessage?->value) }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mode d'activation des nouveaux comptes</label>
+        @php $currentApproval = old('settings.member_registration_approval', $regApproval?->value ?? 'auto'); @endphp
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+          <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+            <input type="radio" name="settings[member_registration_approval]" value="auto" style="margin-top:3px;"
+                   {{ $currentApproval === 'auto' ? 'checked' : '' }}>
+            <span>
+              <strong>Automatique</strong><br>
+              <span style="font-size:12px; color:var(--text-muted);">Le compte est activé immédiatement après l'inscription.</span>
+            </span>
+          </label>
+          <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+            <input type="radio" name="settings[member_registration_approval]" value="email" style="margin-top:3px;"
+                   {{ $currentApproval === 'email' ? 'checked' : '' }}>
+            <span>
+              <strong>Vérification par email</strong><br>
+              <span style="font-size:12px; color:var(--text-muted);">L'utilisateur reçoit un email avec un lien pour activer son compte.</span>
+            </span>
+          </label>
+          <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+            <input type="radio" name="settings[member_registration_approval]" value="admin" style="margin-top:3px;"
+                   {{ $currentApproval === 'admin' ? 'checked' : '' }}>
+            <span>
+              <strong>Approbation par l'admin</strong><br>
+              <span style="font-size:12px; color:var(--text-muted);">Le compte reste en attente jusqu'à ce qu'un admin l'approuve manuellement. Un email est envoyé au membre lors de l'approbation.</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div style="text-align: right;">
     <button type="submit" class="btn btn-primary">Sauvegarder les paramètres</button>
   </div>

@@ -32,6 +32,14 @@
                     <div class="alert alert-danger mb-3">{{ session('error') }}</div>
                 @endif
 
+                @if(session('info'))
+                    <div class="alert mb-3" style="background:#0d1f2d; border:1px solid #00c8ff55; color:#e2e8f0; border-radius:6px; padding:12px 16px; font-size:13px;">{{ session('info') }}</div>
+                @endif
+
+                @if(session('success'))
+                    <div class="alert mb-3" style="background:#052010; border:1px solid #16a34a55; color:#bbf7d0; border-radius:6px; padding:12px 16px; font-size:13px;">{{ session('success') }}</div>
+                @endif
+
                 @yield('form')
             </div>
 

@@ -72,6 +72,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
             Route::put('/{user}', [UserController::class, 'update'])->name('update');
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+            Route::patch('/{user}/approve', [UserController::class, 'approve'])->name('approve');
         });
 
         Route::prefix('profile')->name('profile.')->group(function () {
@@ -137,6 +138,7 @@ Route::prefix('member')->name('member.')->group(function () {
     Route::post('/login', [MemberAuthController::class, 'login'])->name('login.post');
     Route::get('/register', [MemberAuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [MemberAuthController::class, 'register'])->name('register.post');
+    Route::get('/verify-email/{token}', [MemberAuthController::class, 'verifyEmail'])->name('verify-email');
     Route::post('/logout', [MemberAuthController::class, 'logout'])->name('logout');
 
     // Protected — member role required

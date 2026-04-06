@@ -35,10 +35,19 @@
             @else
               <span class="pill pill-read">member</span>
             @endif
+            @if(($user->status ?? 'active') === 'pending')
+              <span class="pill" style="background:#b45309; color:#fff; margin-left:4px;">en attente</span>
+            @endif
           </td>
           <td style="color:var(--text-muted); font-size:12px;">{{ $user->created_at->format('d/m/Y') }}</td>
           <td>
             <div style="display:flex; gap:8px; justify-content:flex-end;">
+              @if(($user->status ?? 'active') === 'pending')
+              <form method="POST" action="{{ route('admin.users.approve', $user) }}">
+                @csrf @method('PATCH')
+                <button type="submit" class="btn btn-primary btn-sm">Approuver</button>
+              </form>
+              @endif
               <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-muted btn-sm">Éditer</a>
               @if($user->id !== Auth::id())
               <form method="POST" action="{{ route('admin.users.destroy', $user) }}"

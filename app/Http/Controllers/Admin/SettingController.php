@@ -17,26 +17,29 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'settings'                          => 'required|array',
-            'settings.mail_mailer'              => 'required|in:smtp,sendmail,log',
-            'settings.mail_host'                => 'required|string|max:255',
-            'settings.mail_port'                => 'required|integer|min:1|max:65535',
-            'settings.mail_username'            => 'nullable|string|max:255',
-            'settings.mail_password'            => 'nullable|string|max:255',
-            'settings.mail_encryption'          => 'nullable|in:tls,ssl,',
-            'settings.mail_from_address'        => 'required|email|max:255',
-            'settings.mail_from_name'           => 'required|string|max:255',
-            'settings.mail_to'                  => 'required|email|max:255',
-            'settings.mail_cc'                  => 'nullable|email|max:255',
-            'settings.notification_subject'     => 'required|string|max:255',
-            'settings.form_success_message'     => 'required|string|max:500',
+            'settings'                                   => 'required|array',
+            'settings.mail_mailer'                       => 'required|in:smtp,sendmail,log',
+            'settings.mail_host'                         => 'required|string|max:255',
+            'settings.mail_port'                         => 'required|integer|min:1|max:65535',
+            'settings.mail_username'                     => 'nullable|string|max:255',
+            'settings.mail_password'                     => 'nullable|string|max:255',
+            'settings.mail_encryption'                   => 'nullable|in:tls,ssl,',
+            'settings.mail_from_address'                 => 'required|email|max:255',
+            'settings.mail_from_name'                    => 'required|string|max:255',
+            'settings.mail_to'                           => 'required|email|max:255',
+            'settings.mail_cc'                           => 'nullable|email|max:255',
+            'settings.notification_subject'              => 'required|string|max:255',
+            'settings.form_success_message'              => 'required|string|max:500',
+            'settings.member_registration_disabled_message' => 'nullable|string|max:500',
+            'settings.member_registration_approval'      => 'nullable|in:auto,email,admin',
         ]);
 
         $data = $request->input('settings');
 
         // Checkboxes: absent from POST = unchecked = 0
-        $data['form_enabled']    = isset($data['form_enabled'])    ? '1' : '0';
-        $data['mail_verify_ssl'] = isset($data['mail_verify_ssl']) ? '1' : '0';
+        $data['form_enabled']                    = isset($data['form_enabled'])                    ? '1' : '0';
+        $data['mail_verify_ssl']                 = isset($data['mail_verify_ssl'])                 ? '1' : '0';
+        $data['member_registration_enabled']     = isset($data['member_registration_enabled'])     ? '1' : '0';
 
         foreach ($data as $key => $value) {
             // Never overwrite password with empty string — keep existing value

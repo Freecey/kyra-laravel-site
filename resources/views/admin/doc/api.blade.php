@@ -177,7 +177,10 @@
       "status": "published",
       "published_at": "2026-04-06T12:00:00Z",
       "featured_image_url": "https://...",
-      "featured_image_position": "center"
+      "featured_image_position": "center",
+      "meta_description": "...",
+      "created_at": "2026-04-06T10:00:00Z",
+      "updated_at": "2026-04-06T11:00:00Z"
     }
   ],
   "meta": {
@@ -214,7 +217,10 @@
     "published_at": "2026-04-06T12:00:00Z",
     "featured_image_url": "https://...",
     "featured_image_position": "center",
-    "media": [ { "id": 3, "url": "https://...", "alt": "...", "is_featured": true } ],
+    "meta_description": "...",
+    "created_at": "2026-04-06T10:00:00Z",
+    "updated_at": "2026-04-06T11:00:00Z",
+    "media": [ { "id": 3, "filename": "photo.webp", "url": "https://...", "mime_type": "image/webp", "size": 42000, "alt": "...", "tag": "[media:3]" } ],
     "author": { "id": 1, "name": "Admin" }
   }
 }</pre>
@@ -331,7 +337,7 @@
         <tr><td class="param-name">alt</td><td class="param-type">string</td><td><span class="param-optional">optionnel</span></td><td>Texte alternatif (max 255)</td></tr>
       </table>
       <h4>Réponse 201</h4>
-<pre class="code-block">{ "data": { "id": 5, "url": "https://...", "filename": "image.jpg", "alt": "...", "is_featured": false }, "message": "Média ajouté." }</pre>
+<pre class="code-block">{ "data": { "id": 5, "filename": "photo.webp", "url": "https://...", "mime_type": "image/webp", "size": 42000, "alt": "...", "tag": "[media:5]" }, "message": "Média ajouté." }</pre>
     </div>
   </div>
 
@@ -360,6 +366,97 @@
       <p style="font-size:12px;color:var(--text-muted);margin:0;">Supprime le fichier et l'enregistrement en base.</p>
       <h4>Réponse 200</h4>
 <pre class="code-block">{ "message": "Média supprimé." }</pre>
+    </div>
+  </div>
+</div>
+
+{{-- ── Shortcode [media:ID] ─────────────────────────────────────────── --}}
+<div class="doc-section">
+  <h3>⬡ Intégrer des médias dans le contenu</h3>
+
+  <div class="info-box">
+    Une fois un média uploadé sur un article, son <strong>tag</strong> (ex. <code>[media:5]</code>) peut être inséré directement dans le champ <code>content</code> (Markdown). Il sera automatiquement remplacé par une balise <code>&lt;img&gt;</code> au rendu.
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header" style="cursor:default;">
+      <span class="method" style="background:rgba(255,255,255,0.06);color:var(--text-muted);border-color:var(--border);min-width:auto;padding:3px 10px;">TAG</span>
+      <span class="endpoint-path">[media:{id}]</span>
+      <span class="endpoint-desc">Syntaxe de base — insère l'image (pleine largeur par défaut)</span>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method" style="background:rgba(255,255,255,0.06);color:var(--text-muted);border-color:var(--border);min-width:auto;padding:3px 10px;">OPTIONS</span>
+      <span class="endpoint-path">[media:{id} maxw=N maxh=N align=start|center|end]</span>
+      <span class="endpoint-desc">Options combinables</span>
+    </div>
+    <div class="endpoint-body">
+      <h4>Paramètres disponibles</h4>
+      <table class="param-table">
+        <tr><th>Option</th><th>Type</th><th>Description</th></tr>
+        <tr><td class="param-name">maxw</td><td class="param-type">integer (px)</td><td>Largeur maximale de l'image (<code>max-width</code>)</td></tr>
+        <tr><td class="param-name">maxh</td><td class="param-type">integer (px)</td><td>Hauteur maximale de l'image (<code>max-height</code>)</td></tr>
+        <tr><td class="param-name">align</td><td class="param-type">start · center · end</td><td>Alignement horizontal via auto-margin. <code>center</code> = centré, <code>end</code> = droite, <code>start</code> = gauche (défaut)</td></tr>
+      </table>
+      <h4>Exemples</h4>
+<pre class="code-block"># Image simple
+[media:5]
+
+# Image centrée, max 400 px de large
+[media:5 maxw=400 align=center]
+
+# Image à droite, max 200 px de haut
+[media:5 maxh=200 align=end]
+
+# Toutes les options ensemble
+[media:5 maxw=600 maxh=400 align=center]</pre>
+      <h4>Workflow recommandé (agent IA)</h4>
+      <ol style="font-size:12px;color:var(--text-muted);padding-left:18px;line-height:1.8;margin:0;">
+        <li>Créer l'article : <code>POST /posts</code> → récupérer <code>data.id</code></li>
+        <li>Uploader les médias : <code>POST /posts/{id}/media</code> → récupérer <code>data.tag</code> de chaque média</li>
+        <li>Mettre à jour le contenu avec les tags : <code>PUT /posts/{id}</code> en insérant <code>data.tag</code> aux bons endroits dans le Markdown</li>
+        <li>Publier : <code>PATCH /posts/{id}/publish</code></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+{{-- ── Manifestes ───────────────────────────────────────────────────────── --}}
+<div class="doc-section">
+  <h3>⌬ Manifestes</h3>
+
+  <div class="info-box">
+    Endpoint <strong>public</strong> — aucune authentification requise. Retourne uniquement les manifestes actifs (dates respectées).
+    La gestion (création, édition, suppression, épinglage) se fait via l'interface admin.
+  </div>
+
+  {{-- GET /manifestes --}}
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method method-get">GET</span>
+      <span class="endpoint-path">/api/v1/manifestes</span>
+      <span class="endpoint-desc">Lister les manifestes actifs</span>
+    </div>
+    <div class="endpoint-body">
+      <div class="info-box" style="margin-bottom:12px;">Route publique — pas de token requis.</div>
+      <h4>Réponse 200</h4>
+<pre class="code-block">{
+  "data": [
+    {
+      "id": 1,
+      "quote": "Le delta ⌬ compte plus que l'état figé.",
+      "body": "Kyra s'intéresse aux transitions, aux dérives, aux signaux faibles.",
+      "is_pinned": true,
+      "sort_order": 0,
+      "starts_at": null,
+      "ends_at": null
+    }
+  ]
+}</pre>
+      <h4>Tri</h4>
+      <p style="font-size:12px;color:var(--text-muted);margin:0;">Les résultats sont triés par : épinglés en premier, puis <code>sort_order</code> ASC, puis <code>id</code> DESC.</p>
     </div>
   </div>
 </div>
@@ -415,10 +512,12 @@ Query params (all optional):
   per_page  = integer (default 15)
   page      = integer
 Response 200: { data: [...posts], meta: { pagination: { total, per_page, current_page, last_page } } }
+  post fields: { id, title, slug, excerpt, status, published_at, featured_image_url, featured_image_position, meta_description, created_at, updated_at }
 
 ### Get one article
 GET /posts/{id}
-Response 200: { data: { id, title, slug, excerpt, content, rendered_content, meta_description, status, published_at, featured_image_url, featured_image_position, media[], author } }
+Response 200: { data: { id, title, slug, excerpt, content, rendered_content, meta_description, status, published_at, featured_image_url, featured_image_position, created_at, updated_at, media[], author } }
+  media item fields: { id, filename, url, mime_type, size, alt, tag }
 
 ### Create article
 POST /posts
@@ -457,7 +556,7 @@ POST /posts/{id}/media
 Multipart form-data:
   file  file    REQUIRED  Image (jpg, jpeg, png, webp, gif, svg, max 10 MB)
   alt   string  optional  Alt text (max 255 chars)
-Response 201: { data: { id, url, filename, alt, is_featured }, message: "Média ajouté." }
+Response 201: { data: { id, filename, url, mime_type, size, alt, tag }, message: "Média ajouté." }
 
 ### Set featured image
 PATCH /posts/{id}/media/{mediaId}/featured
@@ -468,6 +567,33 @@ Response 200: { message: "Image vedette définie." }
 DELETE /posts/{id}/media/{mediaId}
 Deletes file from storage and DB record.
 Response 200: { message: "Média supprimé." }
+
+---
+
+### Manifestes (public — no auth required)
+GET /manifestes
+No params. Returns all currently active manifestes (start/end dates respected).
+Response 200: { data: [ { id, quote, body, is_pinned, sort_order, starts_at, ends_at } ] }
+Sorting: pinned first, then sort_order ASC, then id DESC.
+
+---
+
+### Embedding media in article content — [media:ID] shortcodes
+After uploading a media, its `tag` field (e.g. `[media:5]`) can be placed anywhere in the `content`
+Markdown. It is replaced by an <img> tag at render time (visible in `rendered_content`).
+
+Syntax:
+  [media:{id}]                              — basic, full width
+  [media:{id} maxw=N]                       — max-width in px
+  [media:{id} maxh=N]                       — max-height in px
+  [media:{id} align=start|center|end]       — horizontal alignment
+  [media:{id} maxw=400 maxh=300 align=center]  — all options combined
+
+Recommended workflow:
+  1. POST /posts                → get article id
+  2. POST /posts/{id}/media     → get tag for each image (e.g. "[media:5]")
+  3. PUT  /posts/{id}           → update content with tags embedded in Markdown
+  4. PATCH /posts/{id}/publish
 
 ---
 

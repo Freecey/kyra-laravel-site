@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manifeste;
 use App\Models\Setting;
 
 class PageController extends Controller
 {
     public function home()
     {
-        return view('pages.home');
+        $manifestes = Manifeste::active()->ordered()->limit(6)->get();
+
+        return view('pages.home', compact('manifestes'));
+    }
+
+    public function manifestes()
+    {
+        $manifestes = Manifeste::active()->ordered()->get();
+
+        return view('pages.manifestes', compact('manifestes'));
     }
 
     public function about()

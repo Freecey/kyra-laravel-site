@@ -1,8 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ApiManifesteController;
 use App\Http\Controllers\Api\ApiPostController;
 use App\Http\Controllers\Api\ApiPostMediaController;
+
+// ─── Public ───────────────────────────────────────────────────────────────────
+Route::prefix('v1')->group(function () {
+    Route::get('/manifestes', [ApiManifesteController::class, 'index']);
+});
 
 Route::prefix('v1')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
 

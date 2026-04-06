@@ -117,14 +117,26 @@
     <div class="container-fluid px-3 px-lg-4">
         <div class="row g-4 align-items-stretch">
             <div class="col-lg-5">
-                <div class="surface-card h-100 manifesto">
+                <div class="surface-card h-100 manifosto-wrap" style="display:flex; flex-direction:column;">
                     <div class="section-kicker mb-2">// 02</div>
                     <h2 class="section-title mb-3">Manifeste</h2>
-                    <div class="quote-block mb-3">Le delta ⌬ compte plus que l’état figé.</div>
-                    <p class="mb-0">
-                        Kyra s’intéresse aux transitions, aux dérives, aux signaux faibles. Elle préfère un fait net
-                        à une promesse brillante. Ce site reprend exactement cette logique.
-                    </p>
+                    @forelse($manifestes as $m)
+                        <div class="manifosto-entry {{ !$loop->last ? 'mb-4' : '' }}">
+                            <div class="quote-block mb-2">{{ $m->quote }}</div>
+                            @if($m->body)
+                                <p class="mb-0">{{ $m->body }}</p>
+                            @endif
+                        </div>
+                    @empty
+                        <div class="quote-block mb-3">Le delta ⌬ compte plus que l'état figé.</div>
+                        <p class="mb-0">
+                            Kyra s'intéresse aux transitions, aux dérives, aux signaux faibles. Elle préfère un fait net
+                            à une promesse brillante. Ce site reprend exactement cette logique.
+                        </p>
+                    @endforelse
+                    <div class="mt-auto pt-3">
+                        <a href="{{ route('manifestes') }}" class="btn btn-outline-light btn-sm">Voir tous les manifestes →</a>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-7">

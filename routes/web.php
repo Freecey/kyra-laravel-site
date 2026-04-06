@@ -18,6 +18,7 @@ use App\Http\Controllers\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Member\ProfileController as MemberProfileController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\Admin\AdminManifesteController;
 use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Admin\AdminBlogMediaController;
 
@@ -26,6 +27,8 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/signal', [PageController::class, 'signal'])->name('signal');
 Route::get('/protocole', [PageController::class, 'protocole'])->name('protocole');
+
+Route::get('/manifestes', [PageController::class, 'manifestes'])->name('manifestes');
 
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
@@ -79,6 +82,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         Route::get('/stats', [StatsController::class, 'index'])->name('stats');
+
+        // ─── Manifestes admin ─────────────────────────────────────────────────
+        Route::prefix('manifeste')->name('manifeste.')->group(function () {
+            Route::get('/', [AdminManifesteController::class, 'index'])->name('index');
+            Route::get('/create', [AdminManifesteController::class, 'create'])->name('create');
+            Route::post('/', [AdminManifesteController::class, 'store'])->name('store');
+            Route::get('/{manifeste}/edit', [AdminManifesteController::class, 'edit'])->name('edit');
+            Route::put('/{manifeste}', [AdminManifesteController::class, 'update'])->name('update');
+            Route::delete('/{manifeste}', [AdminManifesteController::class, 'destroy'])->name('destroy');
+            Route::patch('/{manifeste}/pin', [AdminManifesteController::class, 'pin'])->name('pin');
+            Route::patch('/{manifeste}/unpin', [AdminManifesteController::class, 'unpin'])->name('unpin');
+        });
 
         // ─── Blog admin ───────────────────────────────────────────────────────
         Route::prefix('blog')->name('blog.')->group(function () {

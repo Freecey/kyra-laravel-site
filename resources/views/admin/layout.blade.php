@@ -423,6 +423,9 @@
     <a href="{{ route('admin.blog.index') }}" class="nav-link {{ request()->routeIs('admin.blog.*') ? 'active' : '' }}">
       <span class="icon">✦</span> Blog
     </a>
+    <a href="{{ route('admin.manifeste.index') }}" class="nav-link {{ request()->routeIs('admin.manifeste.*') ? 'active' : '' }}">
+      <span class="icon">⌬</span> Manifestes
+    </a>
     <a href="{{ route('admin.stats') }}" class="nav-link {{ request()->routeIs('admin.stats') ? 'active' : '' }}">
       <span class="icon">◈</span> Statistiques
     </a>

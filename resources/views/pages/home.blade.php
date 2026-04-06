@@ -12,7 +12,7 @@
 
             <div class="row align-items-center g-5 hero-content">
                 <div class="col-xl-4 col-lg-5 order-lg-1 order-2">
-                    <div class="avatar-frame hero-avatar">
+                    <div class="hero-avatar">
                         <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
                     </div>
                 </div>

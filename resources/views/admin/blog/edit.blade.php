@@ -86,9 +86,16 @@
                 </div>
                 <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
                   <input type="number" min="1" id="maxw_{{ $media->id }}" placeholder="maxw px"
-                         style="width:76px; font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
+                         style="width:72px; font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
                   <input type="number" min="1" id="maxh_{{ $media->id }}" placeholder="maxh px"
-                         style="width:76px; font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
+                         style="width:72px; font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
+                  <select id="align_{{ $media->id }}"
+                          style="font-size:11px; padding:3px 5px; background:var(--bg-input,var(--bg-panel)); border:1px solid var(--border); border-radius:3px; color:var(--text);">
+                    <option value="">— align</option>
+                    <option value="start">⬛ gauche</option>
+                    <option value="center">⬜ centre</option>
+                    <option value="end">▪ droite</option>
+                  </select>
                   <button type="button" class="btn btn-sm btn-muted"
                           onclick="insertMediaTag({{ $media->id }})">↑ Insérer</button>
                 </div>
@@ -127,9 +134,11 @@ function insertMediaTag(id) {
     if (!textarea) return;
     const maxw = document.getElementById('maxw_' + id)?.value.trim() ?? '';
     const maxh = document.getElementById('maxh_' + id)?.value.trim() ?? '';
+    const align = document.getElementById('align_' + id)?.value ?? '';
     let tag = '[media:' + id + ']';
-    if (/^\d+$/.test(maxw)) tag = '[media:' + id + ' maxw=' + maxw + ']';
+    if (/^\d+$/.test(maxw)) tag = tag.replace(']', ' maxw=' + maxw + ']');
     if (/^\d+$/.test(maxh)) tag = tag.replace(']', ' maxh=' + maxh + ']');
+    if (align) tag = tag.replace(']', ' align=' + align + ']');
     const start = textarea.selectionStart ?? textarea.value.length;
     const end   = textarea.selectionEnd   ?? textarea.value.length;
     const before = textarea.value.substring(0, start);

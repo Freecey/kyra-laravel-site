@@ -64,8 +64,8 @@ class BlogPost extends Model
     {
         $mediaMap = $this->media->keyBy('id');
 
-        // 1. Substitute [media:ID] or [media:ID maxw=N maxh=N] shortcodes with img tags
-        $html = preg_replace_callback('/\[media:(\d+)((?:\s+[a-zA-Z]\w*=\d+)*)\]/', function (array $matches) use ($mediaMap) {
+        // 1. Substitute [media:ID] or [media:ID maxw=N maxh=N align=start|center|end] shortcodes with img tags
+        $html = preg_replace_callback('/\[media:(\d+)((?:\s+(?:[a-zA-Z]\w*=\d+|align=(?:start|center|end)))*)\]/', function (array $matches) use ($mediaMap) {
             $id = (int) $matches[1];
             /** @var PostMedia|null $item */
             $item = $mediaMap->get($id);
@@ -75,15 +75,21 @@ class BlogPost extends Model
             $url = e($item->getUrl());
             $alt = e($item->alt ?? $item->filename);
             $opts = $matches[2] ?? '';
-            $style = '';
+            $style = 'display:block;';
             if (preg_match('/\bmaxw=(\d+)\b/', $opts, $m)) {
                 $style .= 'max-width:' . (int) $m[1] . 'px;';
             }
             if (preg_match('/\bmaxh=(\d+)\b/', $opts, $m)) {
                 $style .= 'max-height:' . (int) $m[1] . 'px;';
             }
-            $styleAttr = $style ? ' style="' . $style . '"' : '';
-            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" class="blog-media"' . $styleAttr . '>';
+            if (preg_match('/\balign=(start|center|end)\b/', $opts, $m)) {
+                $style .= match($m[1]) {
+                    'start'  => 'margin-right:auto;',
+                    'center' => 'margin-left:auto;margin-right:auto;',
+                    'end'    => 'margin-left:auto;',
+                };
+            }
+            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" class="blog-media" style="' . $style . '">';
         }, $this->content ?? '');
 
         // 2. Convert Markdown to HTML (html_input:allow preserves <img> tags from shortcode above)

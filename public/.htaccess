@@ -23,3 +23,40 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# ═══════════════════════════════════════════════════
+# CACHE — Durées longues pour les assets statiques
+# ═══════════════════════════════════════════════════
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Assets Vite (fichiers avec hash dans le nom — /build/)
+    <FilesMatch "\.(css|js)$">
+        ExpiresDefault "access plus 1 year"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Images
+    <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico)$">
+        ExpiresDefault "access plus 30 days"
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+
+    # Polices
+    <FilesMatch "\.(woff2|woff|ttf|otf|eot)$">
+        ExpiresDefault "access plus 1 year"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+
+# ═══════════════════════════════════════════════════
+# COMPRESSION gzip / brotli
+# ═══════════════════════════════════════════════════
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml font/woff2
+</IfModule>
+

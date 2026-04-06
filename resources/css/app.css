@@ -1,3 +1,4 @@
+@import './fonts.css';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
 :root {
@@ -305,6 +306,7 @@ main {
 
 .hero-avatar-inner img {
     width: 100%;
+    height: auto;
     display: block;
     filter: contrast(1.05) saturate(.98) brightness(.94);
 }
@@ -446,6 +448,7 @@ main {
 
 .scan-frame__img {
     width: 100%;
+    height: auto;
     display: block;
     filter: brightness(0.88) contrast(1.08) saturate(0.95);
 }

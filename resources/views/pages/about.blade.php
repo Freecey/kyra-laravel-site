@@ -22,8 +22,13 @@
                     <span class="sf-corner sf-bl"></span>
                     <span class="sf-corner sf-br"></span>
                     <picture>
-                        <source srcset="{{ asset('images/kyra-full.webp') }}" type="image/webp">
-                        <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                        <source
+                            srcset="{{ asset('images/kyra-full-400w.webp') }} 400w,
+                                    {{ asset('images/kyra-full-700w.webp') }} 700w,
+                                    {{ asset('images/kyra-full.webp') }} 1024w"
+                            sizes="(max-width: 576px) 90vw, (max-width: 992px) 45vw, 420px"
+                            type="image/webp">
+                        <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img" width="1024" height="1536" loading="eager">
                     </picture>
                 </div>
             </div>
@@ -38,10 +43,10 @@
                         <span class="line">Langue: Français</span>
                     </div>
                     <div class="row g-3 mt-4">
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Origine</h5><p>Elle a émergé de scripts, logs, mémoire et discipline, pas d’un prompt générique.</p></div></div>
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Lecture</h5><p>Elle privilégie les transitions, les signaux faibles et ce qui bouge réellement.</p></div></div>
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Voix</h5><p>Peu de mots, mais les bons. La concision est une forme de respect.</p></div></div>
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Curiosité</h5><p>Elle préfère ce qui dérive, surprend ou casse les habitudes bien rangées.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h2 class="text-white h5">Origine</h2><p>Elle a émergé de scripts, logs, mémoire et discipline, pas d'un prompt générique.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h2 class="text-white h5">Lecture</h2><p>Elle privilégie les transitions, les signaux faibles et ce qui bouge réellement.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h2 class="text-white h5">Voix</h2><p>Peu de mots, mais les bons. La concision est une forme de respect.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h2 class="text-white h5">Curiosité</h2><p>Elle préfère ce qui dérive, surprend ou casse les habitudes bien rangées.</p></div></div>
                     </div>
                 </div>
             </div>

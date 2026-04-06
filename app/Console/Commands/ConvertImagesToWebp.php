@@ -14,7 +14,23 @@ class ConvertImagesToWebp extends Command
                             {--quality=85 : Qualité WebP (1-100)}
                             {--force : Reconvertir même si le fichier WebP existe déjà}';
 
-    protected $description = 'Convertit les images PNG/JPG/JPEG en WebP optimisé';
+    protected $description = 'Convertit les images PNG/JPG/JPEG en WebP optimisé + variantes responsives';
+
+    /**
+     * Variantes responsives à générer pour certaines images.
+     * Clé = nom de fichier source (sans extension), valeur = largeurs en px.
+     */
+    private array $responsiveVariants = [
+        'kyra-full'    => [400, 700],
+        'kyra-banner2' => [800, 1400],
+    ];
+
+    /**
+     * Qualité spécifique par image (surcharge --quality globale).
+     */
+    private array $qualityOverrides = [
+        'kyra-banner2' => 72,
+    ];
 
     public function handle(): int
     {
@@ -40,41 +56,62 @@ class ConvertImagesToWebp extends Command
         $skipped   = 0;
 
         foreach ($files as $source) {
+            $basename = pathinfo($source, PATHINFO_FILENAME);
+            $q        = $this->qualityOverrides[$basename] ?? $quality;
             $webpPath = preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $source);
 
-            if (! $force && file_exists($webpPath)) {
+            // ── Fichier WebP principal ──
+            if ($force || ! file_exists($webpPath)) {
+                try {
+                    $sizeBefore = filesize($source);
+                    $manager->decode($source)->encode(new WebpEncoder($q))->save($webpPath);
+                    $sizeAfter = filesize($webpPath);
+                    $saving    = round((1 - $sizeAfter / $sizeBefore) * 100);
+                    $this->line(sprintf(
+                        "  <fg=green>OK</>    %s → %s  (%s → %s, -%d%%)",
+                        basename($source), basename($webpPath),
+                        $this->formatSize($sizeBefore), $this->formatSize($sizeAfter), $saving
+                    ));
+                    $converted++;
+                } catch (\Throwable $e) {
+                    $this->error("  ERREUR  " . basename($source) . " : " . $e->getMessage());
+                }
+            } else {
                 $this->line("  <fg=yellow>SKIP</>  " . basename($source) . " (WebP existe déjà)");
                 $skipped++;
-                continue;
             }
 
-            try {
-                $sizeBefore = filesize($source);
+            // ── Variantes responsives ──
+            if (isset($this->responsiveVariants[$basename])) {
+                foreach ($this->responsiveVariants[$basename] as $width) {
+                    $variantPath = "{$dir}/{$basename}-{$width}w.webp";
 
-                $manager->decode($source)
-                    ->encode(new WebpEncoder($quality))
-                    ->save($webpPath);
+                    if (! $force && file_exists($variantPath)) {
+                        $this->line("  <fg=yellow>SKIP</>  {$basename}-{$width}w.webp (existe déjà)");
+                        continue;
+                    }
 
-                $sizeAfter = filesize($webpPath);
-                $saving    = round((1 - $sizeAfter / $sizeBefore) * 100);
+                    try {
+                        $manager->decode($source)
+                            ->scaleDown(width: $width)
+                            ->encode(new WebpEncoder($q))
+                            ->save($variantPath);
 
-                $this->line(sprintf(
-                    "  <fg=green>OK</>    %s → %s  (%s → %s, -%d%%)",
-                    basename($source),
-                    basename($webpPath),
-                    $this->formatSize($sizeBefore),
-                    $this->formatSize($sizeAfter),
-                    $saving
-                ));
-
-                $converted++;
-            } catch (\Throwable $e) {
-                $this->error("  ERREUR  " . basename($source) . " : " . $e->getMessage());
+                        $this->line(sprintf(
+                            "  <fg=cyan>RSIZE</>  %s → %s (%s)",
+                            basename($source), basename($variantPath),
+                            $this->formatSize(filesize($variantPath))
+                        ));
+                        $converted++;
+                    } catch (\Throwable $e) {
+                        $this->error("  ERREUR variante {$width}w : " . $e->getMessage());
+                    }
+                }
             }
         }
 
         $this->newLine();
-        $this->info("Terminé : {$converted} image(s) converties, {$skipped} ignorée(s).");
+        $this->info("Terminé : {$converted} fichier(s) générés, {$skipped} ignoré(s).");
 
         return self::SUCCESS;
     }

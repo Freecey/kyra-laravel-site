@@ -32,8 +32,13 @@
         <div class="hero-panel">
             <div class="hero-background">
                 <picture>
-                    <source srcset="{{ asset('images/kyra-banner2.webp') }}" type="image/webp">
-                    <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background">
+                    <source
+                        srcset="{{ asset('images/kyra-banner2-800w.webp') }} 800w,
+                                {{ asset('images/kyra-banner2-1400w.webp') }} 1400w,
+                                {{ asset('images/kyra-banner2.webp') }} 2000w"
+                        sizes="100vw"
+                        type="image/webp">
+                    <img src="{{ asset('images/kyra-banner2.png') }}" alt="Kyra hero background" width="1536" height="1024" loading="eager">
                 </picture>
             </div>
 
@@ -44,7 +49,7 @@
                             <div class="hero-avatar-inner">
                                 <picture>
                                     <source srcset="{{ asset('images/kyra.webp') }}" type="image/webp">
-                                    <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar">
+                                    <img src="{{ asset('images/kyra.png') }}" alt="Kyra avatar" width="512" height="512">
                                 </picture>
                             </div>
                         </div>
@@ -128,8 +133,13 @@
                                 <span class="sf-corner sf-bl"></span>
                                 <span class="sf-corner sf-br"></span>
                                 <picture>
-                                    <source srcset="{{ asset('images/kyra-full.webp') }}" type="image/webp">
-                                    <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img">
+                                    <source
+                                        srcset="{{ asset('images/kyra-full-400w.webp') }} 400w,
+                                                {{ asset('images/kyra-full-700w.webp') }} 700w,
+                                                {{ asset('images/kyra-full.webp') }} 1024w"
+                                        sizes="(max-width: 768px) 90vw, (max-width: 992px) 40vw, 340px"
+                                        type="image/webp">
+                                    <img src="{{ asset('images/kyra-full.png') }}" alt="Kyra full" class="scan-frame__img" width="1024" height="1536" loading="lazy">
                                 </picture>
                             </div>
                         </div>

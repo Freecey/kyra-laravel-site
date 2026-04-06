@@ -49,13 +49,14 @@
     </script>
     @endif
 
+    {{-- ═══ PRELOAD POLICES CRITIQUES (above the fold) ═══ --}}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/orbitron-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/share-tech-mono-latin.woff2" crossorigin>
+
     {{-- ═══ PRELOAD IMAGES CRITIQUES ═══ --}}
     @stack('preload')
 
-    {{-- ═══ FONTS & ASSETS ═══ --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    {{-- ═══ ASSETS ═══ --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>

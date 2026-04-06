@@ -109,143 +109,140 @@
   </div>
 </div>
 
-{{-- ── État du système ────────────────────────────────────────────── --}}
+{{-- ── Testeur API ─────────────────────────────────────────────────── --}}
 <div class="card" style="margin-top:24px;">
   <div class="card-header">
-    <h2>&#x2699; État du système</h2>
+    <h2>◎ Testeur API</h2>
+    <a href="{{ route('admin.doc.api') }}" class="btn btn-sm btn-muted">Documentation →</a>
   </div>
   <div class="card-body">
 
-    @php
-      $s   = $systemStatus;
-      $ok  = '<span style="color:var(--success); font-weight:700;">OK</span>';
-      $err = '<span style="color:var(--danger,#ff4466); font-weight:700;">KO</span>';
-      $warn = '<span style="color:var(--warning,#ffbb00); font-weight:700;">WARN</span>';
-
-      function sysBytes(int|float|null $bytes): string {
-          if ($bytes === null) return '—';
-          foreach (['B','KB','MB','GB'] as $u) {
-              if ($bytes < 1024) return round($bytes, 1) . ' ' . $u;
-              $bytes /= 1024;
-          }
-          return round($bytes, 1) . ' TB';
-      }
-    @endphp
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px;">
-
-      {{-- Runtime --}}
-      <div style="background:var(--bg-card-alt,rgba(0,200,255,.04)); border:1px solid var(--border); border-radius:4px; padding:14px 16px;">
-        <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:10px;">Runtime</div>
-        <table style="width:100%; border-collapse:collapse; font-size:12px; font-family:'Share Tech Mono',monospace;">
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0; width:50%;">PHP</td>
-            <td style="color:var(--cyan);">{{ $s['php_version'] }}</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Laravel</td>
-            <td style="color:var(--cyan);">{{ $s['laravel_version'] }}</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">APP_ENV</td>
-            <td style="color:{{ $s['app_env'] === 'production' ? 'var(--success)' : 'var(--warning,#ffbb00)' }};">
-              {{ $s['app_env'] }}
-            </td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">APP_DEBUG</td>
-            <td>
-              @if($s['app_debug'])
-                {!! $warn !!} <span style="font-size:11px; color:var(--text-muted);">activé</span>
-              @else
-                {!! $ok !!} <span style="font-size:11px; color:var(--text-muted);">désactivé</span>
-              @endif
-            </td>
-          </tr>
-        </table>
+      @if($tokens->isEmpty())
+      <div style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+        Aucun token API disponible. <a href="{{ route('admin.profile.edit') }}" style="color:var(--cyan);">Générer un token →</a>
       </div>
-
-      {{-- Base de données --}}
-      <div style="background:var(--bg-card-alt,rgba(0,200,255,.04)); border:1px solid var(--border); border-radius:4px; padding:14px 16px;">
-        <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:10px;">Base de données</div>
-        <table style="width:100%; border-collapse:collapse; font-size:12px; font-family:'Share Tech Mono',monospace;">
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0; width:50%;">Driver</td>
-            <td style="color:var(--cyan);">{{ $s['db_driver'] }}</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Connexion</td>
-            <td>{!! $s['db_ok'] ? $ok : $err !!}</td>
-          </tr>
-          @if($s['db_size'] !== null)
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Taille</td>
-            <td style="color:var(--cyan);">{{ sysBytes($s['db_size']) }}</td>
-          </tr>
-          @endif
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Cache driver</td>
-            <td style="color:var(--cyan);">{{ $s['cache_driver'] }}</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Queue driver</td>
-            <td style="color:var(--cyan);">{{ $s['queue_driver'] }}</td>
-          </tr>
-        </table>
+    @else
+      <div style="margin-bottom:8px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <label style="font-size:12px; color:var(--text-muted); white-space:nowrap;">Token :</label>
+        <select id="api-token" style="flex:1; min-width:200px; background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:7px 10px; border-radius:3px; font-family:'Share Tech Mono',monospace; font-size:12px;">
+          @foreach($tokens as $token)
+            <option value="{{ $token->id }}">{{ $token->name }} — créé {{ $token->created_at->diffForHumans() }}</option>
+          @endforeach
+        </select>
       </div>
-
-      {{-- Stockage & Logs --}}
-      <div style="background:var(--bg-card-alt,rgba(0,200,255,.04)); border:1px solid var(--border); border-radius:4px; padding:14px 16px;">
-        <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:10px;">Stockage & Logs</div>
-        <table style="width:100%; border-collapse:collapse; font-size:12px; font-family:'Share Tech Mono',monospace;">
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0; width:50%;">Storage</td>
-            <td>{!! $s['storage_writable'] ? $ok . ' <span style="font-size:11px;color:var(--text-muted);">writable</span>' : $err . ' <span style="font-size:11px;color:var(--text-muted);">non-writable</span>' !!}</td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Taille log</td>
-            <td style="color:{{ $s['log_size'] > 10 * 1024 * 1024 ? 'var(--warning,#ffbb00)' : 'var(--cyan)' }};">
-              {{ sysBytes($s['log_size']) }}
-            </td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Disque libre</td>
-            <td style="color:{{ $s['disk_used_pct'] > 90 ? 'var(--danger,#ff4466)' : ($s['disk_used_pct'] > 75 ? 'var(--warning,#ffbb00)' : 'var(--success)') }};">
-              {{ sysBytes($s['disk_free']) }}
-            </td>
-          </tr>
-          <tr>
-            <td style="color:var(--text-muted); padding:3px 0;">Utilisation</td>
-            <td>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <div style="flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden;">
-                  <div style="height:100%; width:{{ $s['disk_used_pct'] }}%; background:{{ $s['disk_used_pct'] > 90 ? 'var(--danger,#ff4466)' : ($s['disk_used_pct'] > 75 ? 'var(--warning,#ffbb00)' : 'var(--success)') }}; border-radius:3px;"></div>
-                </div>
-                <span style="font-size:11px; color:var(--text-muted); white-space:nowrap;">{{ $s['disk_used_pct'] }}%</span>
-              </div>
-            </td>
-          </tr>
-        </table>
+      <div style="margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <label style="font-size:12px; color:var(--text-muted); white-space:nowrap;">Valeur :</label>
+        <input id="api-token-plain" type="password" placeholder="Colle ici la valeur du token (affiché une fois à la création)"
+               style="flex:1; min-width:260px; background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:7px 10px; border-radius:3px; font-family:'Share Tech Mono',monospace; font-size:12px; outline:none;">
+        <button onclick="document.getElementById('api-token-plain').type = document.getElementById('api-token-plain').type === 'password' ? 'text' : 'password';"
+                style="background:transparent; border:1px solid var(--border); color:var(--text-muted); padding:5px 10px; border-radius:3px; font-size:11px; cursor:pointer; white-space:nowrap;">
+          Afficher
+        </button>
       </div>
+    @endif
 
+    <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+      <select id="api-method" style="background:var(--bg-card); border:1px solid var(--border); color:var(--cyan); padding:7px 12px; border-radius:3px; font-family:'Share Tech Mono',monospace; font-size:12px; font-weight:700; min-width:100px;">
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+        <option>PATCH</option>
+        <option>DELETE</option>
+      </select>
+      <div style="flex:1; display:flex; align-items:center; background:var(--bg-card); border:1px solid var(--border); border-radius:3px; overflow:hidden; min-width:260px;">
+        <span style="padding:0 10px; font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--text-muted); white-space:nowrap; border-right:1px solid var(--border);">{{ url('/api/v1') }}</span>
+        <input id="api-path" type="text" value="/posts" placeholder="/posts" style="flex:1; background:transparent; border:none; color:var(--text); padding:7px 10px; font-family:'Share Tech Mono',monospace; font-size:12px; outline:none;">
+      </div>
+      <button onclick="apiSend()" style="background:transparent; border:1px solid var(--cyan); color:var(--cyan); padding:7px 20px; border-radius:3px; font-size:12px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family:inherit;">
+        Envoyer
+      </button>
     </div>
 
-    {{-- Extensions PHP --}}
-    <div style="margin-top:16px; padding:12px 16px; background:var(--bg-card-alt,rgba(0,200,255,.04)); border:1px solid var(--border); border-radius:4px;">
-      <div style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:10px;">Extensions PHP</div>
-      <div style="display:flex; flex-wrap:wrap; gap:8px;">
-        @foreach($s['extensions'] as $ext)
-          <span style="padding:3px 10px; border-radius:3px; font-family:'Share Tech Mono',monospace; font-size:11px;
-                       background:{{ $ext['loaded'] ? 'rgba(0,200,150,.1)' : 'rgba(255,68,102,.1)' }};
-                       border:1px solid {{ $ext['loaded'] ? 'rgba(0,200,150,.35)' : 'rgba(255,68,102,.35)' }};
-                       color:{{ $ext['loaded'] ? 'var(--success)' : 'var(--danger,#ff4466)' }};">
-            {{ $ext['loaded'] ? '✓' : '✗' }} {{ $ext['name'] }}
-          </span>
-        @endforeach
+    <div id="api-body-wrap" style="display:none; margin-bottom:12px;">
+      <label style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Corps (JSON)</label>
+      <textarea id="api-body" rows="5" placeholder='{ "title": "...", "content": "...", "status": "draft" }'
+                style="width:100%; box-sizing:border-box; background:rgba(0,0,0,.3); border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:3px; font-family:'Share Tech Mono',monospace; font-size:12px; line-height:1.6; resize:vertical; outline:none;"></textarea>
+    </div>
+
+    <div id="api-response" style="display:none;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <span style="font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted);">Réponse</span>
+        <span id="api-status-badge" style="font-family:'Share Tech Mono',monospace; font-size:12px; padding:2px 10px; border-radius:3px;"></span>
+        <span id="api-time" style="font-size:11px; color:var(--text-muted);"></span>
       </div>
+      <pre id="api-output" style="margin:0; background:rgba(0,0,0,.4); border:1px solid var(--border); border-radius:3px; padding:12px 14px; font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--text); white-space:pre-wrap; word-break:break-all; max-height:400px; overflow-y:auto; line-height:1.6;"></pre>
     </div>
 
   </div>
 </div>
+
+@push('scripts')
+<script>
+(function() {
+  var tokenData = @json($tokens->map(fn($t) => ['id' => $t->id, 'raw' => '']));
+
+  // Stocker les plain tokens saisis manuellement (optionnel)
+  var manualToken = '';
+
+  document.getElementById('api-method').addEventListener('change', function() {
+    var m = this.value;
+    var bodyWrap = document.getElementById('api-body-wrap');
+    bodyWrap.style.display = (m === 'GET' || m === 'DELETE') ? 'none' : 'block';
+  });
+
+  window.apiSend = function() {
+    var method   = document.getElementById('api-method').value;
+    var path     = document.getElementById('api-path').value.trim();
+    var bodyEl   = document.getElementById('api-body');
+    var tokenEl  = document.getElementById('api-token');
+
+    if (!path.startsWith('/')) path = '/' + path;
+    var url = '{{ url('/api/v1') }}' + path;
+
+    // Récupérer le plain token depuis un champ manuel si présent, sinon demander
+    var token = document.getElementById('api-token-plain')
+      ? document.getElementById('api-token-plain').value.trim()
+      : '';
+
+    var headers = { 'Accept': 'application/json' };
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+
+    var opts = { method: method, headers: headers };
+    if (method !== 'GET' && method !== 'DELETE' && bodyEl.value.trim()) {
+      headers['Content-Type'] = 'application/json';
+      opts.body = bodyEl.value.trim();
+    }
+
+    var t0 = Date.now();
+    document.getElementById('api-response').style.display = 'none';
+
+    fetch(url, opts)
+      .then(function(res) {
+        var elapsed = Date.now() - t0;
+        var status  = res.status;
+        return res.text().then(function(text) {
+          var badge = document.getElementById('api-status-badge');
+          badge.textContent = status;
+          var ok = status >= 200 && status < 300;
+          badge.style.background = ok ? 'rgba(0,200,150,.15)' : 'rgba(255,68,102,.15)';
+          badge.style.border     = '1px solid ' + (ok ? 'rgba(0,200,150,.5)' : 'rgba(255,68,102,.5)');
+          badge.style.color      = ok ? 'var(--success)' : 'var(--danger,#ff4466)';
+          document.getElementById('api-time').textContent = elapsed + ' ms';
+
+          var out;
+          try { out = JSON.stringify(JSON.parse(text), null, 2); }
+          catch(e) { out = text; }
+          document.getElementById('api-output').textContent = out;
+          document.getElementById('api-response').style.display = 'block';
+        });
+      })
+      .catch(function(e) {
+        document.getElementById('api-output').textContent = 'Erreur réseau : ' + e.message;
+        document.getElementById('api-response').style.display = 'block';
+      });
+  };
+})();
+</script>
+@endpush
 
 @endsection

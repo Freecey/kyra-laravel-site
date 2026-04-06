@@ -420,6 +420,9 @@
         <span class="badge">{{ $unread }}</span>
       @endif
     </a>
+    <a href="{{ route('admin.stats') }}" class="nav-link {{ request()->routeIs('admin.stats') ? 'active' : '' }}">
+      <span class="icon">◈</span> Statistiques
+    </a>
     <div class="nav-section">Administration</div>
     <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
       <span class="icon">⚙</span> Paramètres

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StatsController;
 use App\Http\Controllers\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Member\ProfileController as MemberProfileController;
 
@@ -73,6 +74,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
             Route::put('/', [AdminProfileController::class, 'update'])->name('update');
         });
+
+        Route::get('/stats', [StatsController::class, 'index'])->name('stats');
     });
 });
 

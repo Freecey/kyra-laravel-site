@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
         ]);
+        $middleware->appendToGroup('web', \App\Http\Middleware\TrackPageView::class);
         $middleware->redirectGuestsTo(function ($request) {
             if ($request->is('admin*')) {
                 return route('admin.login');

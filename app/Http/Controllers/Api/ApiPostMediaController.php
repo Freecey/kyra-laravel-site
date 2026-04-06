@@ -24,7 +24,7 @@ class ApiPostMediaController extends Controller
 
         $file     = $request->file('file');
         $slug     = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-        $filename = ($slug ?: Str::random(12)) . '.webp';
+        $filename = ($slug ?: Str::random(12)) . '_' . time() . '.webp';
         $dir      = 'blog/' . $post->id;
         $path     = $dir . '/' . $filename;
 

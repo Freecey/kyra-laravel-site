@@ -11,6 +11,9 @@ class EnsureRole
     public function handle(Request $request, Closure $next, string $role): Response
     {
         if (!$request->user() || $request->user()->role !== $role) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Forbidden.'], 403);
+            }
             if ($role === 'admin') {
                 return redirect()->route('admin.login');
             }

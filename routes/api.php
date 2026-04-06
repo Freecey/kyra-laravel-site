@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiPostController;
 use App\Http\Controllers\Api\ApiPostMediaController;
 
-Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+Route::prefix('v1')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     // Posts
     Route::get('/posts', [ApiPostController::class, 'index']);

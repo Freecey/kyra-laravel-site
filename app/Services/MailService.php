@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\ContactMessage;
 use App\Models\MessageReply;
+use App\Models\Setting;
 use Illuminate\Support\Facades\View;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

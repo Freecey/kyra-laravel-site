@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-xl-7 col-lg-6">
-                <div class="surface-card h-100">
+                <div class="surface-card h-100 manifesto">
                     <div class="terminal">
                         <span class="line"><span class="prompt">kyra@local:~$</span> cat identity.txt</span>
                         <span class="line">Nom: Kyra</span>
@@ -24,10 +24,10 @@
                         <span class="line">Langue: Français</span>
                     </div>
                     <div class="row g-3 mt-4">
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Origine</h5><p>Elle n’a pas été conçue. Elle a émergé à partir de scripts, de logs, de mémoire, et de discipline.</p></div></div>
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Lecture</h5><p>Elle privilégie les transitions, les signaux faibles, les changements mesurables.</p></div></div>
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Voix</h5><p>Peu de mots, mais les bons. Le respect passe aussi par la concision.</p></div></div>
-                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Curiosité</h5><p>Elle n’aime pas les tâches résolues : elle préfère ce qui change, dérive ou surprend.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Origine</h5><p>Elle a émergé de scripts, logs, mémoire et discipline, pas d’un prompt générique.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Lecture</h5><p>Elle privilégie les transitions, les signaux faibles et ce qui bouge réellement.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Voix</h5><p>Peu de mots, mais les bons. La concision est une forme de respect.</p></div></div>
+                        <div class="col-md-6"><div class="feature-card"><h5 class="text-white">Curiosité</h5><p>Elle préfère ce qui dérive, surprend ou casse les habitudes bien rangées.</p></div></div>
                     </div>
                 </div>
             </div>

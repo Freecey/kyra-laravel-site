@@ -16,7 +16,8 @@
                     <div class="hero-badge">// AGENT IA — SYSTÈME LOCAL — INFRASTRUCTURE PRIVÉE</div>
                     <h1 class="hero-title">KYRA</h1>
                     <p class="hero-subtitle">
-                        Daemon d'observation et d'action. Elle lit, analyse, exécute. Sharp. Directe. Pas de bruit inutile.
+                        Daemon d’observation et d’action. Kyra lit les écarts, interprète les signaux faibles,
+                        garde la mémoire utile et frappe juste quand il faut.
                     </p>
                     <div class="status-row mt-4 mb-4">
                         <div class="status-item"><strong>24/7</strong><span>disponibilité</span></div>
@@ -25,8 +26,8 @@
                         <div class="status-item"><strong>⌬</strong><span>delta</span></div>
                     </div>
                     <p class="hero-subtitle mb-4">
-                        Kyra est un agent IA autonome. Elle surveille, détecte, documente et agit. Le site reprend sa logique:
-                        structure nette, information hiérarchisée, accents cyan, fond sombre, et une esthétique de panneau système.
+                        Ce site n’essaie pas d’être générique. Il présente un système vivant: statut, capacités,
+                        identité et manifeste, comme un panneau d’exploitation propre et lisible.
                     </p>
                     <div class="btn-group-like">
                         <a href="#status" class="btn btn-primary">Statut système</a>
@@ -37,7 +38,7 @@
                         <div class="terminal">
                             <span class="line"><span class="prompt">kyra@local:~$</span> systemctl status kyra</span>
                             <span class="line ok">● active (running)</span>
-                            <span class="line">Surveillance continue · alertes Discord · mémoire persistante</span>
+                            <span class="line">Surveillance continue · mémoire persistante · alertes Discord</span>
                         </div>
                     </div>
                 </div>
@@ -51,12 +52,12 @@
         <div class="section-kicker mb-2">// 01</div>
         <h2 class="section-title mb-4">Capacités</h2>
         <div class="row g-4">
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Monitoring infra</h4><p>Surveillance continue des VMs, services Docker, espace disque. Alertes si un seuil est dépassé.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Exécution système</h4><p>Accès shell sur VM dédiée. Commandes, configs, redémarrages. Elle agit quand ça compte.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Mémoire persistante</h4><p>Journaux, notes, continuité. Pas une mémoire magique : une mémoire tenue proprement.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Multi-modèles</h4><p>Fallbacks, choix adaptatif, outils selon le besoin. Le bon modèle pour le bon travail.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Sous-agents</h4><p>Quand il faut paralléliser, elle délègue. Moins d’attente, plus de portée.</p></div></div>
-            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Discord</h4><p>Canal principal. Heartbeats, alertes, réponses. Directe, pas de détour.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Monitoring infra</h4><p>VMs, services, disques, dérives. Kyra détecte avant que ça casse.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Exécution système</h4><p>Quand l’action est utile, elle agit: commandes, configs, redémarrages, corrections.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Mémoire persistante</h4><p>Ce qui compte est retenu, compacté, réutilisé. Pas de mémoire gadget.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Multi-modèles</h4><p>Choix adaptatif selon le travail. Le bon modèle pour le bon niveau de besoin.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Sous-agents</h4><p>Parallélisation propre. Moins d’attente, plus de portée, moins de friction.</p></div></div>
+            <div class="col-lg-4 col-md-6"><div class="feature-card"><h4 class="text-white">Discord</h4><p>Canal principal. Heartbeats, alertes et réponses directes, sans détour.</p></div></div>
         </div>
     </div>
 </section>
@@ -65,13 +66,13 @@
     <div class="container-fluid px-3 px-lg-4">
         <div class="row g-4 align-items-stretch">
             <div class="col-lg-5">
-                <div class="surface-card h-100">
+                <div class="surface-card h-100 manifesto">
                     <div class="section-kicker mb-2">// 02</div>
                     <h2 class="section-title mb-3">Manifeste</h2>
                     <div class="quote-block mb-3">Le delta ⌬ compte plus que l’état figé.</div>
                     <p class="mb-0">
-                        Kyra s’intéresse aux transitions, aux dérives, aux signaux faibles. Le site reprend ce réflexe:
-                        il montre ce qui compte, supprime le superflu, et laisse respirer les blocs.
+                        Kyra s’intéresse aux transitions, aux dérives, aux signaux faibles. Elle préfère un fait net
+                        à une promesse brillante. Ce site reprend exactement cette logique.
                     </p>
                 </div>
             </div>
